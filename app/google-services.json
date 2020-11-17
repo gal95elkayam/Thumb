@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "140124792998",
+    "firebase_url": "https://thumb-792f6.firebaseio.com",
+    "project_id": "thumb-792f6",
+    "storage_bucket": "thumb-792f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140124792998:android:2798ca3bb9cad219b36c67",
+        "android_client_info": {
+          "package_name": "com.example.thumb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140124792998-qfpm93ekbgjcljcilmmdpj51neuo48at.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNy-5M21VJRzFGMi8C9nyAJzv33u_knj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140124792998-qfpm93ekbgjcljcilmmdpj51neuo48at.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
