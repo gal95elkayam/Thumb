@@ -44,6 +44,12 @@ dependencies {
     // Also declare the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.facebook.android:facebook-login:[4,5)'
+    implementation 'com.facebook.android:facebook-login:4.42.0'
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+
+
+
 
 }

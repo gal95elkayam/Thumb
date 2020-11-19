@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bb"
+    android:background="@drawable/art"
     tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/bungee"
         android:text="Login"
         android:textColor="@color/colorWhite"
         android:textSize="36sp"
@@ -49,7 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_email"
@@ -84,10 +85,11 @@
         android:id="@+id/btnlogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="84dp"
         android:background="@drawable/btn_bg"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/inputPassword"
         app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
 
@@ -124,8 +126,11 @@
         android:id="@+id/btnGoogle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/btn_bg"
         android:drawableLeft="@drawable/ic_google"
         android:drawablePadding="10dp"
@@ -138,19 +143,20 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.32999998"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="8dp"
-        android:layout_gravity="start" />
+        app:layout_constraintVertical_bias="0.196" />
 
     <Button
         android:id="@+id/btnFacebook"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:background="@drawable/btn_bg"
         android:drawableStart="@drawable/ic_facebook"
+        android:drawableLeft="@drawable/ic_facebook"
         android:drawablePadding="10dp"
         android:paddingLeft="20dp"
         android:text="Facebook"
@@ -161,9 +167,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnGoogle"
         app:layout_constraintTop_toTopOf="@+id/btnGoogle"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="32dp"
-        android:layout_gravity="start"
-        android:drawableLeft="@drawable/ic_facebook" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
