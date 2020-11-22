@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bb">
-
-
+    android:background="@drawable/back_g">
 
 
     <TextView
@@ -19,8 +17,8 @@
         android:textSize="36sp"
         android:textStyle="bold"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="68dp" />
+        tools:layout_editor_absoluteX="59dp"
+        tools:layout_editor_absoluteY="67dp" />
 
     <EditText
         android:id="@+id/name"
@@ -73,7 +71,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/personNumber"
         android:layout_width="179dp"
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
@@ -83,12 +81,12 @@
         android:inputType="numberDecimal"
         android:text="Personal Number"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+        app:layout_constraintTop_toBottomOf="@+id/releaseDate"
         tools:layout_editor_absoluteX="132dp"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/releaseDate"
         android:layout_width="179dp"
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
@@ -102,6 +100,40 @@
         app:layout_constraintHorizontal_bias="0.568"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="102dp"
+        android:layout_height="95dp"
+        app:layout_constraintBottom_toBottomOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="@+id/logo"
+        app:srcCompat="@drawable/account_circle"
+        tools:layout_editor_absoluteX="269dp"
+        tools:ignore="MissingConstraints,VectorDrawableCompat" />
+
+    <ImageView
+        android:id="@+id/hoger"
+        android:layout_width="58dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start"
+        app:layout_constraintTop_toBottomOf="@+id/personNumber"
+        app:srcCompat="@drawable/ic_baseline_attachment_24"
+        tools:ignore="MissingConstraints,VectorDrawableCompat"
+        tools:layout_editor_absoluteX="269dp" />
+
+    <TextView
+        android:id="@+id/k"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:text="Add picture"
+        android:textSize="19dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/hoger"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="589dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

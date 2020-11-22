@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
     TextView btn;
@@ -88,6 +89,8 @@ public class RegisterActivity extends AppCompatActivity {
                         Intent intent=new Intent(RegisterActivity.this,MainActivity.class);
                         //, this flag will cause any existing task that would be associated with the activity to be cleared before the activity is started
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //get user
+                        FirebaseUser user = mAuth.getCurrentUser();
                         startActivity(intent);
                     }
                     else {
