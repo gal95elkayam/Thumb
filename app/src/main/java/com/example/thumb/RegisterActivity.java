@@ -60,9 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
         String email=inputEmail.getText().toString();
         String password=inputPassword.getText().toString();
         String conformpassword=inputConformPassword.getText().toString();
-
         if(username.isEmpty() || username.length()<7){
-            showError(inputUserName,"Your username is not valid!");
+            showError(inputUserName,"Your username is not valid, must be 7 character!");
         }
         else if (email.isEmpty() || !email.contains("@")){
             showError(inputEmail,"Email is not valid!");
@@ -86,12 +85,14 @@ public class RegisterActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
                         Toast.makeText(RegisterActivity.this,"Successfuly Registreation",Toast.LENGTH_SHORT).show();
                         mLoadingBar.dismiss();
-                        Intent intent=new Intent(RegisterActivity.this,MainActivity.class);
+                        Intent intent=new Intent(RegisterActivity.this,SolidierActivity.class);
                         //, this flag will cause any existing task that would be associated with the activity to be cleared before the activity is started
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         //get user
                         FirebaseUser user = mAuth.getCurrentUser();
                         startActivity(intent);
+
+
                     }
                     else {
                         Toast.makeText(RegisterActivity.this,task.getException().toString(),Toast.LENGTH_SHORT).show();
