@@ -53,6 +53,7 @@ import java.util.Collections;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 101;
+    private static final int RC_SIGN_IN_facebook = 100;
     private static final String TAG = LoginActivity.class.getSimpleName();
     private Button btnGoogle;
     private Button btnFacebook;
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         printKeyHash();
-        btnFacebook=findViewById(R.id.btnFacebook);
+
         btn=findViewById(R.id.textViewSignUp);
         inputEmail=findViewById(R.id.inputEmail);
         inputPassword=findViewById(R.id.inputPassword);
@@ -106,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+        btnFacebook=findViewById(R.id.btnFacebook);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
-
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,9 +119,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
 
     private void signInFacebook(){
         callbackManager = CallbackManager.Factory.create();
@@ -214,9 +213,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //for facebook
-        if(callbackManager.onActivityResult(requestCode, resultCode, data)) {
-            return;
-        }
+
+//        if(callbackManager.onActivityResult(requestCode, resultCode, data)) {
+//            return;
+//        }
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -231,6 +231,12 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
                 // ...
             }
+        }
+        else {
+            if(callbackManager.onActivityResult(requestCode, resultCode, data)){
+                return;
+            }
+
         }
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
