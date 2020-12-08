@@ -41,7 +41,7 @@ public class ScannerQrActivity extends AppCompatActivity {
     Button btn_start_again;
     FirebaseVisionBarcodeDetectorOptions options;
     FirebaseVisionBarcodeDetector detector;
-    int p;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
