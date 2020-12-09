@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,13 +33,14 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class SolidierActivity extends AppCompatActivity {
-    EditText inputName, inputLastName, inputId, inputReleseDate, inputPersonalNumber;
+    EditText inputName, inputLastName, inputId, inputReleseDate, inputPersonalNumber,forPic;
     private StorageReference mStorageRef;
     private ProgressDialog mLoadingBar;
     ImageView hoger;
     Uri imageuri;
     DatabaseReference myRef;
     Button btnRegisterSolidier;
+    Bitmap selected_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class SolidierActivity extends AppCompatActivity {
         // Create a storage reference from our app
         mStorageRef = FirebaseStorage.getInstance().getReference();
         hoger = (ImageView) findViewById(R.id.hoger);
+        forPic=findViewById(R.id.for_add_pic);
         mLoadingBar = new ProgressDialog(this);
         mLoadingBar.setTitle("Uploading..");
         //open image gallery
@@ -84,7 +87,7 @@ public class SolidierActivity extends AppCompatActivity {
         try {
             //set image in imageView
             InputStream is = getContentResolver().openInputStream(imageuri);
-            final Bitmap selected_image = BitmapFactory.decodeStream(is);
+            selected_image = BitmapFactory.decodeStream(is);
             hoger.setImageBitmap(selected_image);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -96,7 +99,7 @@ public class SolidierActivity extends AppCompatActivity {
         String id = inputId.getText().toString();
         String personalNumber = inputPersonalNumber.getText().toString();
         String releseDate = inputReleseDate.getText().toString();
-        Drawable drawable = hoger.getDrawable();
+       // Bitmap emptyBitmap = Bitmap.createBitmap(selected_image.getWidth(), selected_image.getHeight(), selected_image.getConfig());
         if (name.isEmpty()) {
             showError(inputName, "Your name is not valid!");
         } else if (lastName.isEmpty()) {
@@ -107,8 +110,8 @@ public class SolidierActivity extends AppCompatActivity {
             showError(inputPersonalNumber, "Personal Number not much!");
         } else if (releseDate.isEmpty() || releseDate.length() < 10) {
             showError(inputPersonalNumber, "Relese Date not much!");
-        } else if(drawable==null){
-            Toast.makeText(SolidierActivity.this,"add pic",Toast.LENGTH_SHORT).show();
+        } else if(selected_image==null){
+            showError(forPic, "put pic!");
         }
         else {
             UserInformation userInformation = new UserInformation(name,lastName,id,personalNumber,releseDate);
