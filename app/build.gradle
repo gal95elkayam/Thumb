@@ -58,6 +58,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:20.1.2'
     implementation 'com.google.android.gms:play-services-vision-common:19.1.2'
     implementation 'com.google.android.gms:play-services-vision-image-label:18.1.0'
+    //new
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'id.privy.livenessfirebasesdk:livenessDetection:0.0.6'
+
     //Liraries
     implementation 'com.karumi:dexter:5.0.0'
     implementation 'com.otaliastudios:cameraview:2.6.4'

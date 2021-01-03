@@ -288,7 +288,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     //where we send the user
     private void updateUI(FirebaseUser user) {
-        Intent intent=new Intent(LoginActivity.this,ScannerQrActivity.class);
+        Intent intent=new Intent(LoginActivity.this,ShakeEmergencyActivity.class);
         startActivity(intent);
     }
 

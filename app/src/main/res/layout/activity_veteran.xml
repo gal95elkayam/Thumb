@@ -11,17 +11,17 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
         android:fontFamily="@font/bungee"
-        android:text="Solidier"
+        android:text="Veteran"
         android:textColor="@color/colorBlack"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092"
+        app:layout_constraintVertical_bias="0.079"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -29,9 +29,9 @@
         android:layout_width="123dp"
         android:layout_height="74dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/input_bg"
         android:ems="10"
         android:hint="Name"
@@ -61,7 +61,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/name_veteran"
         app:layout_constraintTop_toTopOf="@+id/name_veteran"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="RtlCompat" />
 
     <EditText
@@ -69,7 +69,7 @@
         android:layout_width="151dp"
         android:layout_height="49dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/input_bg"
         android:ems="10"
         android:hint="ID"
@@ -77,7 +77,6 @@
         android:textAlignment="center"
         android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_veteran"
         tools:ignore="MissingConstraints" />
@@ -87,16 +86,17 @@
         android:layout_width="154dp"
         android:layout_height="53dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/input_black"
         android:ems="10"
-        android:hint="Personal Number"
+        android:hint="Car Number"
         android:inputType="numberDecimal"
         android:textAlignment="center"
         android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.836"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/type_car"
+        app:layout_constraintTop_toBottomOf="@+id/id_veteran"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -104,17 +104,18 @@
         android:layout_width="151dp"
         android:layout_height="52dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
         android:background="@drawable/input_bg"
         android:ems="10"
-        android:hint="Release Date"
+        android:hint="Type of Car"
         android:inputType="date"
         android:textAlignment="center"
         android:textColorHint="@color/colorBlack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintBottom_toTopOf="@+id/identity_text"
+        app:layout_constraintEnd_toStartOf="@+id/car_number"
+        app:layout_constraintHorizontal_bias="0.607"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_veteran" />
+        app:layout_constraintTop_toTopOf="@+id/car_number"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/selfie_veteran"
@@ -138,10 +139,10 @@
         android:layout_height="29dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="56dp"
         android:gravity="start"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toEndOf="@+id/identity_text"
         app:layout_constraintTop_toBottomOf="@+id/car_number"
         app:srcCompat="@drawable/ic_baseline_attachment_24"
@@ -149,18 +150,65 @@
 
     <TextView
         android:id="@+id/identity_text"
-        android:layout_width="130dp"
-        android:layout_height="45dp"
+        android:layout_width="131dp"
+        android:layout_height="61dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginLeft="108dp"
+        android:layout_marginTop="56dp"
         android:ems="10"
-        android:text="Add hoger's picture"
+        android:text="Add identity card"
         android:textAlignment="center"
         android:textSize="19dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/car_number"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/certificate_text"
+        android:layout_width="131dp"
+        android:layout_height="61dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:ems="10"
+        android:text="Add discharge certificate "
+        android:textAlignment="center"
+        android:textSize="19dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegisterSolider"
+        app:layout_constraintStart_toStartOf="@+id/identity_text"
+        app:layout_constraintTop_toBottomOf="@+id/identity_text"
+        app:layout_constraintVertical_bias="0.689"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/certificate"
+        android:layout_width="51dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.952"
+        app:layout_constraintStart_toEndOf="@+id/certificate_text"
+        app:layout_constraintTop_toBottomOf="@+id/identity"
+        app:srcCompat="@drawable/ic_baseline_attachment_24"
+        tools:ignore="MissingConstraints,VectorDrawableCompat" />
+
+    <EditText
+        android:id="@+id/for_add_pic_certificate"
+        android:layout_width="21dp"
+        android:layout_height="6dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+
+        android:layout_marginTop="8dp"
+        android:background="@color/cardview_shadow_end_color"
+        android:ems="10"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegisterSolider"
+        app:layout_constraintStart_toEndOf="@+id/certificate_text"
+        app:layout_constraintTop_toBottomOf="@+id/certificate"
+        app:layout_constraintVertical_bias="0.15"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -172,36 +220,38 @@
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/identity_text"
-        app:layout_constraintVertical_bias="0.319"
+        app:layout_constraintVertical_bias="0.705"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/for_add_pic_identity"
         android:layout_width="21dp"
         android:layout_height="6dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="8dp"
         android:background="@color/cardview_shadow_end_color"
         android:ems="10"
+        app:layout_constraintBottom_toTopOf="@+id/certificate"
         app:layout_constraintStart_toEndOf="@+id/identity_text"
         app:layout_constraintTop_toBottomOf="@+id/identity"
+        app:layout_constraintVertical_bias="0.13"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/for_add_pic2"
         android:layout_width="30dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="12dp"
 
         android:background="@color/cardview_shadow_end_color"
         android:ems="10"
         app:layout_constraintTop_toBottomOf="@+id/selfie_veteran"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="274dp" />
+        tools:layout_editor_absoluteX="339dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

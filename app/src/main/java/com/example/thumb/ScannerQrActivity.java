@@ -128,20 +128,20 @@ public class ScannerQrActivity extends AppCompatActivity {
                       /////////////////////////////////////////////////////////////////////////////////
                       //////////////////////////////////////////////////////////////////////////////////
                       /////////////////////////////////////////////////////////////////////////////
-                      case FirebaseVisionBarcode.TYPE_CONTACT_INFO:
-                      {
-                          String info=new StringBuilder("Name: ")
-                                  .append(item.getContactInfo().getName().getFormattedName())
-                                  .append("\n")
-                                  .append("Address: ")
-                                  .append(item.getContactInfo().getAddresses().get(0).getAddressLines()[0])
-                                  .append("\n")
-                                  .append("Email: ")
-                                  .append(item.getContactInfo().getEmails().get(0).getAddress())
-                                  .toString();
-                          createDialog(info);
-                      }
-                      break;
+//                      case FirebaseVisionBarcode.TYPE_CONTACT_INFO:
+//                      {
+//                          String info=new StringBuilder("Name: ")
+//                                  .append(item.getContactInfo().getName().getFormattedName())
+//                                  .append("\n")
+//                                  .append("Address: ")
+//                                  .append(item.getContactInfo().getAddresses().get(0).getAddressLines()[0])
+//                                  .append("\n")
+//                                  .append("Email: ")
+//                                  .append(item.getContactInfo().getEmails().get(0).getAddress())
+//                                  .toString();
+//                          createDialog(info);
+//                      }
+                    //  break;
                       default:
                           break;
 
@@ -149,7 +149,7 @@ public class ScannerQrActivity extends AppCompatActivity {
               }
           }
     }
-
+    //string userId
     private void createDialog(String text) {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setMessage(text)

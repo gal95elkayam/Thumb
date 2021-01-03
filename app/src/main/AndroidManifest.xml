@@ -37,6 +37,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SolidierActivity" />
+        <activity android:name=".VeteranActivity" />
+        <activity android:name=".ShakeEmergencyActivity" />
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
