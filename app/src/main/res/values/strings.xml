@@ -3,5 +3,7 @@
     <string name="facebook_app_id">487389755521081</string>
     <string name="fb_login_protocol_scheme">fb487389755521081</string>
     <string name="name">Name</string>
+    <string name="collection_users" />
+    <string name="collection_user_locations" />
 
 </resources>

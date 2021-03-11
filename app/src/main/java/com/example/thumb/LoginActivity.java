@@ -207,7 +207,6 @@ public class LoginActivity extends AppCompatActivity {
             mLoadingBar.setMessage("Please wait, while check your credentials");
             mLoadingBar.setCanceledOnTouchOutside(false);
             mLoadingBar.show();
-
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -218,7 +217,6 @@ public class LoginActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
-
                 }
             });
         }
@@ -288,7 +286,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     //where we send the user
     private void updateUI(FirebaseUser user) {
-        Intent intent=new Intent(LoginActivity.this,ShakeEmergencyActivity.class);
+        Intent intent=new Intent(LoginActivity.this,RecoredAndLocationActivity.class);
         startActivity(intent);
     }
 

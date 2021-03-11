@@ -66,6 +66,9 @@ dependencies {
     implementation 'com.karumi:dexter:5.0.0'
     implementation 'com.otaliastudios:cameraview:2.6.4'
 
+    //location
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+
 
 
 

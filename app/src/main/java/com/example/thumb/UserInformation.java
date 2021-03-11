@@ -16,7 +16,6 @@ public class UserInformation {
         this.id = id;
         this.personalNumber = personalNumber;
         this.releseDate=releseDate;
-
     }
     public String getName() {
         return name;
