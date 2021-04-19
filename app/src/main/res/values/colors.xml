@@ -8,5 +8,9 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorRed">#C11515</color>
     <color name="gray">#808080</color>
+    <color name="cyan_500">#00BCD4</color>
+    <color name="yellow">#607957</color>
+
+
 
 </resources>

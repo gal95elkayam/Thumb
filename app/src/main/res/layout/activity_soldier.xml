@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_g">
+    android:background="@drawable/lookinggreen">
 
 
     <TextView
@@ -32,7 +32,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginLeft="56dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/input_bg"
+        android:background="@drawable/input_black"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
@@ -70,7 +70,7 @@
         android:layout_height="49dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
-        android:background="@drawable/input_bg"
+        android:background="@drawable/input_black"
         android:ems="10"
         android:hint="ID"
         android:inputType="textPersonName"
@@ -105,9 +105,9 @@
         android:layout_height="52dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:background="@drawable/input_bg"
+        android:background="@drawable/input_black"
         android:ems="10"
-        android:hint="Release Date"
+        android:hint="Address"
         android:inputType="date"
         android:textAlignment="center"
         android:textColorHint="@color/colorBlack"
@@ -156,7 +156,8 @@
         android:layout_marginLeft="80dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:text="Add hoger's picture"
+        android:text="Add picture"
+        android:textColor="@color/colorBlack"
         android:textAlignment="center"
         android:textSize="19dp"
         app:layout_constraintStart_toStartOf="parent"

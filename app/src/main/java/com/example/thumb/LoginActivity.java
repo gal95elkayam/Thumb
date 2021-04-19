@@ -286,7 +286,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     //where we send the user
     private void updateUI(FirebaseUser user) {
-        Intent intent=new Intent(LoginActivity.this,RecoredAndLocationActivity.class);
+        Intent intent=new Intent(LoginActivity.this,newn.class);
         startActivity(intent);
     }
 

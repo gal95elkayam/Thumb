@@ -173,7 +173,8 @@ public class SolidierActivity extends AppCompatActivity {
             showError(inputPersonalNumber, "Personal Number not much!");
         } else if (releseDate.isEmpty() || releseDate.length() < 10) {
             showError(inputReleseDate, "Relese Date not much!");
-        } else if(selected_image==null){
+        }
+        else if(selected_image==null){
             showError(forPic, "put pic!");
         }
         else if(selfie==null){
@@ -217,7 +218,7 @@ public class SolidierActivity extends AppCompatActivity {
                             //check if the user upload hoger
                             firstpic_hoger=true;
                             if(firstpic_self){
-                                Intent intent=new Intent(SolidierActivity.this,ScannerQrActivity.class);
+                                Intent intent=new Intent(SolidierActivity.this,newn.class);
                                 startActivity(intent);
                             }
 

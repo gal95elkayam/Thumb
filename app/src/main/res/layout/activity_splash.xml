@@ -8,10 +8,12 @@
 
     <ImageView
         android:id="@+id/background"
-        android:background="@drawable/thumbsplash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main22"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-2dp">
 
     </ImageView>
 

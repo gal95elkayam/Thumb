@@ -13,6 +13,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.Objects;
 
 public class ShakeEmergencyActivity extends AppCompatActivity {

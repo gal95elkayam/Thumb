@@ -23,6 +23,8 @@
         <activity android:name=".ScannerQrActivity"></activity>
         <activity android:name=".activity_splash" />
         <activity android:name=".RecoredAndLocationActivity" />
+        <activity android:name=".newn" />
+        <activity android:name=".message" />
         <activity android:name=".LoginActivity">
 
             <!-- <intent-filter> -->

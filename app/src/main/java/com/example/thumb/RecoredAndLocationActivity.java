@@ -33,6 +33,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -51,6 +52,10 @@ public class RecoredAndLocationActivity extends AppCompatActivity {
     private static int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     private static int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
     private StorageReference mStorageRef;
+    ///////////////
+
+
+    /////////////////
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};

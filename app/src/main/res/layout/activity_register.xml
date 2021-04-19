@@ -5,21 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
-    android:background="@drawable/bb">
+    android:background="@drawable/faces">
+
     <TextView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
         android:fontFamily="@font/bungee"
+        android:text="Register"
         android:textColor="@color/colorBlack"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.159" />
 
     <EditText
         android:id="@+id/inputUsername"
@@ -49,7 +51,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/input_bg"
+        android:background="@drawable/input_black"
         android:drawableLeft="@drawable/ic_email"
         android:drawablePadding="10dp"
         android:ems="10"
@@ -59,8 +61,8 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="@+id/inputUsername"
         app:layout_constraintStart_toStartOf="@+id/inputUsername"
         app:layout_constraintTop_toBottomOf="@+id/inputUsername" />
@@ -80,8 +82,8 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorWhite"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="@+id/inputEmail"
         app:layout_constraintStart_toStartOf="@+id/inputEmail"
         app:layout_constraintTop_toBottomOf="@+id/inputEmail"
@@ -92,7 +94,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/input_bg"
+        android:background="@drawable/input_black"
         android:drawableLeft="@drawable/ic_security"
         android:drawablePadding="10dp"
         android:ems="10"
@@ -127,7 +129,7 @@
         android:layout_marginTop="28dp"
         android:shadowColor="@color/colorWhite"
         android:text="Already Have an Account?"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="@+id/btnRegister"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btnRegister"
