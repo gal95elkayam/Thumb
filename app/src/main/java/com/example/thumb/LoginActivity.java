@@ -23,9 +23,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -42,13 +39,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -286,7 +279,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     //where we send the user
     private void updateUI(FirebaseUser user) {
-        Intent intent=new Intent(LoginActivity.this,newn.class);
+        Intent intent=new Intent(LoginActivity.this, notificationActivity.class);
         startActivity(intent);
     }
 

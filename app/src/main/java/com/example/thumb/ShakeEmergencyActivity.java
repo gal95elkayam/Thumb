@@ -14,8 +14,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-
 import java.util.Objects;
 
 public class ShakeEmergencyActivity extends AppCompatActivity {
@@ -60,7 +58,7 @@ public class ShakeEmergencyActivity extends AppCompatActivity {
             mAccel = mAccel * 0.9f + delta;
             if (mAccel > 12) {
                 Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(ShakeEmergencyActivity.this,RecoredAndLocationActivity.class);
+                Intent intent=new Intent(ShakeEmergencyActivity.this, LocationActivity.class);
                 startActivity(intent);
                 finish();
             }

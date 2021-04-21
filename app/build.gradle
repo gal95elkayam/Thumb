@@ -72,5 +72,8 @@ dependencies {
     //location
     implementation 'com.google.android.gms:play-services-location:17.1.0'
 
+    // Declare the dependencies for the Firebase Cloud Messaging
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
+
 
 }

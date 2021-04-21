@@ -22,8 +22,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ScannerQrActivity"></activity>
         <activity android:name=".activity_splash" />
-        <activity android:name=".RecoredAndLocationActivity" />
-        <activity android:name=".newn" />
+        <activity android:name=".notificationActivity" />
+        <activity android:name=".LocationActivity" />
+        <activity android:name=".firstScreenChat" />
         <activity android:name=".message" />
         <activity android:name=".LoginActivity">
 
@@ -75,6 +76,21 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+<!--        <service-->
+<!--            android:name=".MyFirebaseMessagingService"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT"/>-->
+<!--            </intent-filter>-->
+<!--        </service>-->
+
+        <service android:name=".FCMMessageReceiverService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

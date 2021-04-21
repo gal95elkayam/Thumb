@@ -25,8 +25,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -34,6 +37,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Map;
 
 import id.privy.livenessfirebasesdk.LivenessApp;
 import id.privy.livenessfirebasesdk.entity.LivenessItem;
@@ -162,6 +167,7 @@ public class SolidierActivity extends AppCompatActivity {
         String id = inputId.getText().toString();
         String personalNumber = inputPersonalNumber.getText().toString();
         String releseDate = inputReleseDate.getText().toString();
+
        // Bitmap emptyBitmap = Bitmap.createBitmap(selected_image.getWidth(), selected_image.getHeight(), selected_image.getConfig());
         if (name.isEmpty()) {
             showError(inputName, "Your name is not valid!");
@@ -218,7 +224,8 @@ public class SolidierActivity extends AppCompatActivity {
                             //check if the user upload hoger
                             firstpic_hoger=true;
                             if(firstpic_self){
-                                Intent intent=new Intent(SolidierActivity.this,newn.class);
+
+                                Intent intent=new Intent(SolidierActivity.this, firstScreenChat.class);
                                 startActivity(intent);
                             }
 
@@ -235,6 +242,7 @@ public class SolidierActivity extends AppCompatActivity {
         }
 
     }
+
 
     private void showError(EditText input, String s) {
         input.setError(s);
