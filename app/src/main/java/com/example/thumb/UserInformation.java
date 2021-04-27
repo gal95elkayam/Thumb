@@ -4,19 +4,29 @@ public class UserInformation {
     private String name;
     private String lastName;
     private String id;
-    private String personalNumber;
-    private String releseDate;
+    private String phoneNumber;
+    private String typeUser;
+    private String  age;
 
 
     public UserInformation(){
     }
-    public UserInformation(String name, String lastName, String id,String personalNumber,String releseDate) {
+    public UserInformation(String name, String lastName, String id,String phoneNumber ,String typeUser) {
         this.name = name;
         this.lastName = lastName;
         this.id = id;
-        this.personalNumber = personalNumber;
-        this.releseDate=releseDate;
+        this.phoneNumber = phoneNumber;
+        this.typeUser=typeUser;
     }
+    public UserInformation(String name, String lastName, String id,String phoneNumber ,String typeUser, String age) {
+        this.name = name;
+        this.lastName = lastName;
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+        this.typeUser=typeUser;
+        this.age=age;
+    }
+    public String getTypeUser(){return typeUser;}
     public String getName() {
         return name;
     }
@@ -26,34 +36,8 @@ public class UserInformation {
     public String getId() {
         return id;
     }
-    public String getPersonalNumber() {
-        return personalNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
-    public String getReleseDate() {
-        return releseDate;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLastName(String LastName) {
-        this.lastName = lastName;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
-    public void setPersonalNumber(String PersonalNumber) {
-        this.personalNumber = PersonalNumber;
-    }
-    public void setReleseDate(String ReleseDate) {
-        this.releseDate = ReleseDate;
-    }
-
-
-
-
-
-
 
 }

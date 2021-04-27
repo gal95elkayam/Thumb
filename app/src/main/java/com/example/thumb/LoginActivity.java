@@ -38,27 +38,38 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 101;
     private static final int RC_SIGN_IN_facebook = 100;
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final String TAG = "LoginActivity";
     private Button btnGoogle;
     private Button btnFacebook;
+    private DatabaseReference mDatabase;
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     TextView btn;
+    TextView forgotPassword;
     EditText inputEmail,inputPassword;
     Button btnLogin;
     private ProgressDialog mLoadingBar;
     //Facebook Declaration
     CallbackManager callbackManager;
     LoginManager loginManager;
+    private FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +77,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         printKeyHash();
-
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        forgotPassword=findViewById(R.id.forgotPassword);
         btn=findViewById(R.id.textViewSignUp);
         inputEmail=findViewById(R.id.inputEmail);
         inputPassword=findViewById(R.id.inputPassword);
@@ -86,13 +99,34 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
             }
         });
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(inputEmail.toString())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Email sent", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+            }
+        });
+
+
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//        if(account == null){
+//            System.out.println("gal");
+//        }
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken(getString(R.string.default_web_client_id))
+//                .requestEmail()
+//                .build();
+//        // Build a GoogleSignInClient with the options specified by gso.
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         btnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,6 +187,8 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            ////////////////////////////////////////
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -188,7 +224,6 @@ public class LoginActivity extends AppCompatActivity {
     private void  checkCrededentials(){
         String email=inputEmail.getText().toString();
         String password=inputPassword.getText().toString();
-
         if(email.isEmpty() || !email.contains("@")){
             showError(inputEmail,"Email is not valid!");
         }
@@ -205,10 +240,17 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         mLoadingBar.dismiss();
-                        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                        //, this flag will cause any existing task that would be associated with the activity to be cleared before the activity is started
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+//                        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+//                        //, this flag will cause any existing task that would be associated with the activity to be cleared before the activity is started
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        /////////////////////////////////////////
+//                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this, "your password or email wrong, please try again",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -222,6 +264,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn() {
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -229,12 +278,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //for facebook
-
-//        if(callbackManager.onActivityResult(requestCode, resultCode, data)) {
-//            return;
-//        }
-
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -266,11 +309,23 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(LoginActivity.this,user.getEmail()+user.getDisplayName(),Toast.LENGTH_SHORT).show();
-                            updateUI(user);
+                            //////////////////////////////////////////////////////////////////////////////////////////////////
+                            //to check if it's the first time user logs in, yes->need to register'no->have a count
+                            boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
+                            ///////////////////////////////////////////////////////////////////////////////
+                            if(!isNew) {
+                                updateUI(user);
+                            }
+                            else{
+                                Intent intent=new  Intent(LoginActivity.this, RegisterActivityGoogel.class);
+                                startActivity(intent);
+                                finish();;
+
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this,task.getException().toString(),Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                           // updateUI(null);
                         }
 
                         // ...
@@ -279,8 +334,60 @@ public class LoginActivity extends AppCompatActivity {
     }
     //where we send the user
     private void updateUI(FirebaseUser user) {
-        Intent intent=new Intent(LoginActivity.this, notificationActivity.class);
-        startActivity(intent);
+        final Intent[] intent = new Intent[1];
+        //check where we need to send each user--volunteer/need help
+       // DatabaseReference myRef= FirebaseDatabase.getInstance().getReference();
+        FirebaseDatabase myRef = FirebaseDatabase.getInstance();
+        DatabaseReference tripsRef = myRef.getReference().child("users").child(user.getUid());
+        tripsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.d(TAG, "onDataChange: ");
+
+                if (dataSnapshot.exists()) {
+
+                    UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
+                    Log.d(TAG, "User name: " + userInformation.getName() + ", type: " + userInformation.getTypeUser());
+                    if(userInformation.getTypeUser().equals("volunteer")){
+                         intent[0] =new Intent(LoginActivity.this, firstScreenChat.class);
+                    }
+                    else{
+                        intent[0] =new Intent(LoginActivity.this, ShakeEmergencyActivity.class);
+                    }
+                    startActivity(intent[0]);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+//        ValueEventListener postListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // Get Post object and use the values to update the UI
+//                UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
+//                if(userInformation.getTypeUser().equals("volunteer")){
+//                     intent[0] =new Intent(LoginActivity.this, firstScreenChat.class);
+//                }
+//                else{
+//                    intent[0]=new Intent(LoginActivity.this, ShakeEmergencyActivity.class);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+//            }
+//        };
+       // tripsRef.addListenerForSingleValueEvent(postListener);
+
+       // Intent intent=new Intent(LoginActivity.this, notificationActivity.class);
     }
 
 

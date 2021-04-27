@@ -25,7 +25,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/name_veteran"
+        android:id="@+id/name"
         android:layout_width="123dp"
         android:layout_height="74dp"
         android:layout_gravity="center_horizontal"
@@ -43,7 +43,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/lastname_veteran"
+        android:id="@+id/lastName"
         android:layout_width="109dp"
         android:layout_height="74dp"
         android:layout_marginStart="32dp"
@@ -56,16 +56,16 @@
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textColorHint="@color/colorBlack"
-        app:layout_constraintBottom_toTopOf="@+id/id_veteran"
+        app:layout_constraintBottom_toTopOf="@+id/id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/name_veteran"
-        app:layout_constraintTop_toTopOf="@+id/name_veteran"
+        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintTop_toTopOf="@+id/name"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="RtlCompat" />
 
     <EditText
-        android:id="@+id/id_veteran"
+        android:id="@+id/id"
         android:layout_width="151dp"
         android:layout_height="49dp"
         android:layout_gravity="center_horizontal"
@@ -78,11 +78,12 @@
         android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_veteran"
+        app:layout_constraintTop_toBottomOf="@+id/name"
         tools:ignore="MissingConstraints" />
 
+
     <EditText
-        android:id="@+id/car_number"
+        android:id="@+id/phone_number"
         android:layout_width="154dp"
         android:layout_height="53dp"
         android:layout_gravity="center_horizontal"
@@ -94,31 +95,13 @@
         android:textAlignment="center"
         android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.836"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_veteran"
+        app:layout_constraintTop_toBottomOf="@+id/id"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/type_car"
-        android:layout_width="151dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/input_black"
-        android:ems="10"
-        android:hint="address"
-        android:inputType="date"
-        android:textAlignment="center"
-        android:textColorHint="@color/colorBlack"
-        app:layout_constraintBottom_toTopOf="@+id/identity_text"
-        app:layout_constraintEnd_toStartOf="@+id/car_number"
-        app:layout_constraintHorizontal_bias="0.607"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/car_number"
-        app:layout_constraintVertical_bias="0.0" />
-
     <ImageView
-        android:id="@+id/selfie_veteran"
+        android:id="@+id/selfie"
         android:layout_width="102dp"
         android:layout_height="95dp"
         android:layout_marginStart="52dp"
@@ -144,7 +127,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toEndOf="@+id/identity_text"
-        app:layout_constraintTop_toBottomOf="@+id/car_number"
+        app:layout_constraintTop_toBottomOf="@+id/phone_number"
         app:srcCompat="@drawable/ic_baseline_attachment_24"
         tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
@@ -162,7 +145,7 @@
         android:textSize="19dp"
         android:textColor="@color/colorBlack"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/car_number"
+        app:layout_constraintTop_toBottomOf="@+id/phone_number"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -176,7 +159,7 @@
         android:textAlignment="center"
         android:textSize="19dp"
         android:textColor="@color/colorBlack"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegisterSolider"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegisterClient"
         app:layout_constraintStart_toStartOf="@+id/identity_text"
         app:layout_constraintTop_toBottomOf="@+id/identity_text"
         app:layout_constraintVertical_bias="0.689"
@@ -207,14 +190,14 @@
         android:layout_marginTop="8dp"
         android:background="@color/cardview_shadow_end_color"
         android:ems="10"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegisterSolider"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegisterClient"
         app:layout_constraintStart_toEndOf="@+id/certificate_text"
         app:layout_constraintTop_toBottomOf="@+id/certificate"
         app:layout_constraintVertical_bias="0.15"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/btnRegisterSolider"
+        android:id="@+id/btnRegisterClient"
         android:layout_width="208dp"
         android:layout_height="34dp"
         android:layout_marginTop="10dp"
@@ -251,7 +234,7 @@
 
         android:background="@color/cardview_shadow_end_color"
         android:ems="10"
-        app:layout_constraintTop_toBottomOf="@+id/selfie_veteran"
+        app:layout_constraintTop_toBottomOf="@+id/selfie"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="339dp" />
 

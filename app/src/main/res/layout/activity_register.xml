@@ -40,7 +40,7 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +104,7 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="@+id/inputPassword"
         app:layout_constraintStart_toStartOf="@+id/inputPassword"
@@ -135,25 +135,32 @@
         app:layout_constraintStart_toStartOf="@+id/btnRegister"
         app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
-    <RadioButton
-        android:id="@+id/btnSolider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:text="Solider"
-        app:layout_constraintTop_toTopOf="@+id/inputConformPassword"
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="150dp"
+        android:layout_height="74dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+        app:layout_constraintTop_toBottomOf="@+id/inputConformPassword"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="32dp" />
+        tools:layout_editor_absoluteX="242dp">
 
-    <RadioButton
-        android:id="@+id/btnVeteran"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
-        android:text="Veteran"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSolider"
-        app:layout_constraintStart_toEndOf="@+id/btnSolider"
-        app:layout_constraintTop_toTopOf="@+id/btnSolider"
-        tools:ignore="MissingConstraints" />
+        <RadioButton
+            android:id="@+id/radio_volunteer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="volunteer" />
+
+        <RadioButton
+            android:id="@+id/radio_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="need help" />
+
+    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,4 @@
 package com.example.thumb;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -51,7 +49,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case VIEW_HOLDER_ME:
                 return new ViewHolderMe(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.my_message, viewGroup, false));
             case VIEW_HOLDER_YOU:
-                return new ViewHolderYou(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.their_message, viewGroup, false));
+                return new ViewHolderYou(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.try_their_message, viewGroup, false));
             default:
                 return null;
         }

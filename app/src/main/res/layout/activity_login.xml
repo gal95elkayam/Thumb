@@ -32,7 +32,7 @@
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Password"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -156,7 +156,7 @@
         android:layout_marginRight="32dp"
         android:background="@drawable/input_black"
         android:drawableStart="@drawable/ic_facebook"
-        android:drawableLeft="@drawable/ic_facebook"
+
         android:drawablePadding="10dp"
         android:paddingLeft="20dp"
         android:text="Facebook"
@@ -167,6 +167,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnGoogle"
         app:layout_constraintTop_toTopOf="@+id/btnGoogle"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:drawableLeft="@drawable/ic_facebook" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,10 +22,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ScannerQrActivity"></activity>
         <activity android:name=".activity_splash" />
-        <activity android:name=".notificationActivity" />
+        <activity android:name=".SubscribeActivity" />
         <activity android:name=".LocationActivity" />
         <activity android:name=".firstScreenChat" />
-        <activity android:name=".message" />
+        <activity android:name=".ChatActivity" />
         <activity android:name=".LoginActivity">
 
             <!-- <intent-filter> -->
@@ -46,9 +46,10 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".SolidierActivity" />
-        <activity android:name=".VeteranActivity" />
+        <activity android:name=".ClientActivity" />
+        <activity android:name=".VolunteerActivity" />
         <activity android:name=".ShakeEmergencyActivity" />
+        <activity android:name=".RegisterActivityGoogel" />
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"

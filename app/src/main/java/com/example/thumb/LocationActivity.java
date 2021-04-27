@@ -138,6 +138,7 @@ public class LocationActivity extends AppCompatActivity {
                                 emailIntent.putExtra(Intent.EXTRA_CC, CC);
                                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Location");
                                 emailIntent.putExtra(Intent.EXTRA_TEXT, "http://maps.google.com?q="+latitude+","+longtitude);
+
                                 try {
                                     startActivity(Intent.createChooser(emailIntent, "Send mail..."));
                                     finish();

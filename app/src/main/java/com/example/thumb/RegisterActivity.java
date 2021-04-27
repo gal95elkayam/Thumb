@@ -3,6 +3,7 @@ package com.example.thumb;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,15 +27,33 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnRegister;
     private FirebaseAuth mAuth;
     private ProgressDialog mLoadingBar;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         btn=findViewById(R.id.alreadyHaveAccount);
         inputUserName=findViewById(R.id.inputUsername);
         inputEmail=findViewById(R.id.inputEmail);
         inputPassword=findViewById(R.id.inputPassword);
+
+        radioGroup = findViewById(R.id.radioGroup);
+        radioGroup.clearCheck();
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("ResourceType")
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = (RadioButton) group.findViewById(checkedId);
+                if (null != rb && checkedId > -1) {
+                    Toast.makeText(RegisterActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+//        int radioId = radioGroup.getCheckedRadioButtonId();
+//        radioButton = findViewById(radioId);
+
+
         inputConformPassword=findViewById(R.id.inputConformPassword);
         mAuth=FirebaseAuth.getInstance();
         mLoadingBar=new ProgressDialog(RegisterActivity.this);
@@ -60,8 +79,11 @@ public class RegisterActivity extends AppCompatActivity {
         String email=inputEmail.getText().toString();
         String password=inputPassword.getText().toString();
         String conformpassword=inputConformPassword.getText().toString();
-        if(username.isEmpty() || username.length()<7){
-            showError(inputUserName,"Your username is not valid, must be 7 character!");
+
+        final RadioButton rb = (RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
+
+        if(username.isEmpty() ){
+            showError(inputUserName,"Your username is not valid");
         }
         else if (email.isEmpty() || !email.contains("@")){
             showError(inputEmail,"Email is not valid!");
@@ -77,24 +99,30 @@ public class RegisterActivity extends AppCompatActivity {
             mLoadingBar.setMessage("Please wait, while check your credentials");
             mLoadingBar.setCanceledOnTouchOutside(false);
             mLoadingBar.show();
-
-
             mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(RegisterActivity.this,"Successfuly Registreation",Toast.LENGTH_SHORT).show();
                         mLoadingBar.dismiss();
-                        Intent intent=new Intent(RegisterActivity.this,SolidierActivity.class);
+
+                        /////////////////////////
+                        Intent intent;
+                        if(rb.getText().equals("volunteer")){
+                            intent=new Intent(RegisterActivity.this, VolunteerActivity.class);
+                        }
+                        else{
+                            intent=new Intent(RegisterActivity.this, ClientActivity.class);
+                        }
                         //, this flag will cause any existing task that would be associated with the activity to be cleared before the activity is started
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        //get user
-                        FirebaseUser user = mAuth.getCurrentUser();
                         startActivity(intent);
+                        finish();
 
 
                     }
                     else {
+                        Toast.makeText(RegisterActivity.this,"problem",Toast.LENGTH_SHORT).show();
                         Toast.makeText(RegisterActivity.this,task.getException().toString(),Toast.LENGTH_SHORT).show();
                     }
 

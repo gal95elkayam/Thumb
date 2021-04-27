@@ -2,18 +2,11 @@ package com.example.thumb;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,24 +19,19 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
-
-import java.util.Map;
-
-public class notificationActivity extends AppCompatActivity {
+public class SubscribeActivity extends AppCompatActivity {
     private static final String TAG ="notificationActivity" ;
     private static final String FCM_CHANNEL_ID="FCM_CHANNEL_ID";
     private Button mBtnSubscribe;
     private Button mUnBtnSubscribe;
+    private Button mbuttonChat;
     static TextView mOutput;
-    static TextView verify_numbertext;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notification);
-
+        setContentView(R.layout.subscribe);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel fcmChannel = new NotificationChannel(
                     FCM_CHANNEL_ID, "FC_Channel", NotificationManager.IMPORTANCE_HIGH);
@@ -52,6 +40,7 @@ public class notificationActivity extends AppCompatActivity {
         }
         mBtnSubscribe = findViewById(R.id.buttonSubscribe);
         mUnBtnSubscribe = findViewById(R.id.buttonUnSubscribe);
+        mbuttonChat=findViewById(R.id.buttonChat);
         mOutput =  (TextView) findViewById(R.id.textView2);
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
@@ -71,7 +60,7 @@ public class notificationActivity extends AppCompatActivity {
         mBtnSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseMessaging.getInstance().subscribeToTopic("tennis-topic").addOnCompleteListener(new OnCompleteListener<Void>() {
+                FirebaseMessaging.getInstance().subscribeToTopic("power-topic").addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
@@ -88,7 +77,7 @@ public class notificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                FirebaseMessaging.getInstance().unsubscribeFromTopic("tennis-topic").
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("power-topic").
                         addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -100,6 +89,15 @@ public class notificationActivity extends AppCompatActivity {
 
                         });
 
+            }
+        });
+
+        mbuttonChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(SubscribeActivity.this, ChatActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
