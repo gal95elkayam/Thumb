@@ -1,0 +1,303 @@
+commit 0456d1e87e1a1bce4a09e577504b0d4cc9c6af68
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Fri Mar 12 00:22:29 2021 +0200
+
+    start of record
+
+ app/build.gradle                                   |   3 +
+ app/src/main/AndroidManifest.xml                   |   9 +-
+ .../main/java/com/example/thumb/LoginActivity.java |   4 +-
+ .../example/thumb/RecoredAndLocationActivity.java  | 198 +++++++++++++++++++++
+ .../com/example/thumb/ShakeEmergencyActivity.java  |   5 +-
+ .../java/com/example/thumb/UserInformation.java    |   1 -
+ .../main/java/com/example/thumb/UserLocation.java  |  55 ++++++
+ app/src/main/res/drawable/itsok.jpg                | Bin 0 -> 7543 bytes
+ app/src/main/res/layout/activity_location.xml      |  16 ++
+ app/src/main/res/values/strings.xml                |   2 +
+ 10 files changed, 286 insertions(+), 7 deletions(-)
+
+commit efcc20249834f7d9e8a4d5fc0a5d413e5f531e03
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Wed Mar 3 16:32:16 2021 +0200
+
+    send email-location
+
+ .../example/thumb/RecoredAndLocationActivity.java  | 220 +++++++++++++++++++++
+ 1 file changed, 220 insertions(+)
+
+commit fa7e7d93fc5761a3f4ca61988b3c0462baa4ebe0
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Sun Jan 3 11:48:11 2021 +0200
+
+    כפתור חירום חלקי+מסך עזרה
+
+ .idea/jarRepositories.xml                          |   5 +
+ app/build.gradle                                   |   4 +
+ app/src/main/AndroidManifest.xml                   |   2 +
+ app/src/main/ic_launcher-playstore.png             | Bin 0 -> 13175 bytes
+ .../main/java/com/example/thumb/LoginActivity.java |   2 +-
+ .../java/com/example/thumb/ScannerQrActivity.java  |  30 +--
+ .../com/example/thumb/ShakeEmergencyActivity.java  |  79 ++++++
+ .../java/com/example/thumb/SolidierActivity.java   | 134 ++++++++--
+ .../java/com/example/thumb/VeteranActivity.java    | 293 +++++++++++++++++++++
+ app/src/main/res/anim/shake.xml                    |  10 +
+ app/src/main/res/drawable/emergency.png            | Bin 0 -> 61646 bytes
+ .../res/drawable/ic_baseline_phone_android_24.xml  |  10 +
+ .../main/res/drawable/ic_launcher_background.xml   | 236 +++++------------
+ app/src/main/res/drawable/phon.xml                 |  15 ++
+ app/src/main/res/drawable/shake.xml                |   4 +
+ app/src/main/res/layout/activity_shake.xml         |  39 +++
+ app/src/main/res/layout/activity_soldier.xml       | 168 ++++++------
+ app/src/main/res/layout/activity_veteran.xml       | 257 ++++++++++++++++++
+ app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml |   5 -
+ .../res/mipmap-anydpi-v26/ic_launcher_round.xml    |   5 -
+ app/src/main/res/mipmap-hdpi/ic_launcher.png       | Bin 3593 -> 0 bytes
+ app/src/main/res/mipmap-hdpi/ic_launcher_round.png | Bin 5339 -> 0 bytes
+ app/src/main/res/mipmap-mdpi/ic_launcher.png       | Bin 2636 -> 0 bytes
+ app/src/main/res/mipmap-mdpi/ic_launcher_round.png | Bin 3388 -> 0 bytes
+ app/src/main/res/mipmap-xhdpi/ic_launcher.png      | Bin 4926 -> 0 bytes
+ .../main/res/mipmap-xhdpi/ic_launcher_round.png    | Bin 7472 -> 0 bytes
+ app/src/main/res/mipmap-xxhdpi/ic_launcher.png     | Bin 7909 -> 0 bytes
+ .../main/res/mipmap-xxhdpi/ic_launcher_round.png   | Bin 11873 -> 0 bytes
+ app/src/main/res/mipmap-xxxhdpi/ic_launcher.png    | Bin 10652 -> 0 bytes
+ .../main/res/mipmap-xxxhdpi/ic_launcher_round.png  | Bin 16570 -> 0 bytes
+ build.gradle                                       |   4 +
+ 31 files changed, 1017 insertions(+), 285 deletions(-)
+
+commit d995ebd3d5f0c813c4ae61efdca79b221d733c37
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Wed Dec 9 12:44:47 2020 +0200
+
+    pic
+
+ app/src/main/java/com/example/thumb/ScannerQrActivity.java |  2 +-
+ app/src/main/java/com/example/thumb/SolidierActivity.java  | 13 ++++++++-----
+ app/src/main/res/layout/activity_soldier.xml               | 13 +++++++++++++
+ 3 files changed, 22 insertions(+), 6 deletions(-)
+
+commit 6c114542d9ad1a5656ffeeb448dbd7f4318038ee
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Tue Dec 8 11:19:12 2020 +0200
+
+    ScannerQrActivity12
+
+ app/src/main/java/com/example/thumb/ScannerQrActivity.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4e515e12403a5458a62ef2be9ad540c0593bd5cd
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Tue Dec 8 11:15:58 2020 +0200
+
+    ScannerQrActivity
+
+ app/src/main/java/com/example/thumb/ScannerQrActivity.java | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 4e10f8f98bf5867983db7b3d45fc0efbd64e32e9
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Mon Dec 7 14:50:43 2020 +0200
+
+    ScannerQrActivity
+
+ app/build.gradle                                   |  17 +-
+ app/src/main/AndroidManifest.xml                   |  35 +++--
+ .../main/java/com/example/thumb/LoginActivity.java |   2 +-
+ .../java/com/example/thumb/ScannerQrActivity.java  | 175 +++++++++++++++++++++
+ app/src/main/res/drawable/rectangle.xml            |  14 ++
+ app/src/main/res/layout/activity_scanner_qr.xml    |  44 ++++++
+ app/src/main/res/values/colors.xml                 |   2 +
+ build.gradle                                       |   3 +-
+ 8 files changed, 276 insertions(+), 16 deletions(-)
+
+commit 6b055228b781e15976ca15cd1c6658946321555b
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Thu Dec 3 19:25:29 2020 +0200
+
+    google work
+    facebook work
+
+ .../main/java/com/example/thumb/LoginActivity.java | 28 +++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
+
+commit 595224e9fb451845433900d83891b56e3683e045
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Thu Dec 3 19:08:39 2020 +0200
+
+    google work
+    facebook doesn't update in firebase
+
+ .../main/java/com/example/thumb/LoginActivity.java   | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
+
+commit 09def9b3a14e245adf3d946145e8ff5f7a0b53d0
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Thu Dec 3 15:30:34 2020 +0200
+
+    soldier screen-in process
+
+ app/build.gradle                                   |   3 +-
+ app/src/main/AndroidManifest.xml                   |   1 +
+ .../java/com/example/thumb/RegisterActivity.java   |   7 +-
+ .../java/com/example/thumb/SolidierActivity.java   | 109 ++++++++++++++++++---
+ .../java/com/example/thumb/UserInformation.java    |  60 ++++++++++++
+ app/src/main/res/layout/activity_soldier.xml       |  94 ++++++++++++------
+ 6 files changed, 223 insertions(+), 51 deletions(-)
+
+commit 7a2d07aaba4056a479eec8550e33cf4df04c7f2e
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Sun Nov 22 10:35:16 2020 +0200
+
+    design
+
+ app/build.gradle                                   |   1 +
+ .../java/com/example/thumb/RegisterActivity.java   |   3 +
+ .../java/com/example/thumb/SolidierActivity.java   |  67 +++++++++++++++++++++
+ app/src/main/res/drawable/back_g.jpg               | Bin 0 -> 41472 bytes
+ .../res/drawable/ic_baseline_attachment_24.xml     |  10 +++
+ app/src/main/res/layout/activity_login.xml         |  22 +++----
+ app/src/main/res/layout/activity_register.xml      |  14 ++---
+ .../layout/{soldier.xml => activity_soldier.xml}   |  48 ++++++++++++---
+ app/src/main/res/values/strings.xml                |   1 +
+ 9 files changed, 140 insertions(+), 26 deletions(-)
+
+commit 5d3b093bf9c3750023155c3a8e935a0598148478
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Fri Nov 20 03:23:51 2020 +0200
+
+    background-register-new1
+
+ app/src/main/res/drawable/account_circle.xml |  10 +++
+ app/src/main/res/drawable/input_black.xml    |   6 ++
+ app/src/main/res/layout/soldier.xml          | 108 +++++++++++++++++++++++++++
+ 3 files changed, 124 insertions(+)
+
+commit 868d330db1a9319bf7e3aaee776240a66fc5c946
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Fri Nov 20 01:29:47 2020 +0200
+
+    background-register-new
+
+ app/src/main/res/drawable-v24/bb.jpg          | Bin 39841 -> 0 bytes
+ app/src/main/res/drawable/bb.jpg              | Bin 0 -> 35947 bytes
+ app/src/main/res/drawable/register.jpg        | Bin 346479 -> 0 bytes
+ app/src/main/res/layout/activity_register.xml |   2 +-
+ 4 files changed, 1 insertion(+), 1 deletion(-)
+
+commit 69a8d8c776f5462da8d587f5fc1501899229fb28
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Fri Nov 20 01:05:59 2020 +0200
+
+    background-register
+
+ app/src/main/res/drawable/a.jpg               | Bin 0 -> 35707 bytes
+ app/src/main/res/layout/activity_register.xml |   2 +-
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+commit 65b3c83f1a43f03beb98ba6f5803945e4f797d06
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Thu Nov 19 22:34:31 2020 +0200
+
+    background
+
+ app/build.gradle                                   |   8 +-
+ app/src/main/AndroidManifest.xml                   |  42 ++++++----
+ .../main/java/com/example/thumb/LoginActivity.java |  92 ++++++---------------
+ .../java/com/example/thumb/SplashActivity.java     |  32 +++++++
+ .../java/com/example/thumb/activity_splash.java    |  14 ++++
+ app/src/main/res/anim/mysplashanimtion.xml         |  11 +++
+ app/src/main/res/drawable/art.jpg                  | Bin 0 -> 56166 bytes
+ app/src/main/res/drawable/back_main.png            | Bin 0 -> 315466 bytes
+ app/src/main/res/drawable/car.jpg                  | Bin 0 -> 409740 bytes
+ app/src/main/res/drawable/main.jpg                 | Bin 0 -> 83015 bytes
+ app/src/main/res/drawable/nightmountains.jpg       | Bin 0 -> 133549 bytes
+ app/src/main/res/drawable/reg.jpg                  | Bin 0 -> 112509 bytes
+ app/src/main/res/drawable/register.jpg             | Bin 0 -> 346479 bytes
+ app/src/main/res/drawable/thumbsplash.jpg          | Bin 0 -> 107904 bytes
+ app/src/main/res/font/.xml                         |   7 ++
+ app/src/main/res/font/architects_daughter.xml      |   7 ++
+ app/src/main/res/font/bungee.xml                   |   7 ++
+ app/src/main/res/layout/activity_login.xml         |  25 +++---
+ app/src/main/res/layout/activity_register.xml      |   5 +-
+ app/src/main/res/layout/activity_splash.xml        |  18 ++++
+ app/src/main/res/values/font_certs.xml             |  17 ++++
+ app/src/main/res/values/preloaded_fonts.xml        |   8 ++
+ 22 files changed, 197 insertions(+), 96 deletions(-)
+
+commit 7af87146b7ffaa86feed2643667952a4c15035f5
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Tue Nov 17 13:23:12 2020 +0200
+
+    init commit -second try
+
+ .gitignore                               |  14 +++
+ .idea/codeStyles/Project.xml             | 122 ++++++++++++++++++++++
+ .idea/codeStyles/codeStyleConfig.xml     |   5 +
+ .idea/gradle.xml                         |  21 ++++
+ .idea/jarRepositories.xml                |  25 +++++
+ .idea/misc.xml                           |   9 ++
+ .idea/modules/app/google-services.json   |  48 +++++++++
+ .idea/runConfigurations.xml              |  12 +++
+ .idea/vcs.xml                            |   6 ++
+ build.gradle                             |  27 +++++
+ gradle.properties                        |  21 ++++
+ gradle/wrapper/gradle-wrapper.jar        | Bin 0 -> 54329 bytes
+ gradle/wrapper/gradle-wrapper.properties |   6 ++
+ gradlew                                  | 172 +++++++++++++++++++++++++++++++
+ gradlew.bat                              |  84 +++++++++++++++
+ settings.gradle                          |   2 +
+ 16 files changed, 574 insertions(+)
+
+commit 95f386869cfb36a10bcaf9a52430b51d475cbc32
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Tue Nov 17 13:05:51 2020 +0200
+
+    first commit
+
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 3b8b6cd622787282ebe62eadb68d18572b68afb4
+Author: Gal <gal95elkayam@gmail.com>
+Date:   Tue Nov 17 12:54:26 2020 +0200
+
+    Initial commit
+
+ app/.gitignore                                     |   1 +
+ app/build.gradle                                   |  49 ++++
+ app/google-services.json                           |  40 +++
+ app/proguard-rules.pro                             |  21 ++
+ .../com/example/thumb/ExampleInstrumentedTest.kt   |  24 ++
+ app/src/main/AndroidManifest.xml                   |  45 +++
+ .../main/java/com/example/thumb/LoginActivity.java | 308 +++++++++++++++++++++
+ .../main/java/com/example/thumb/MainActivity.kt    |  11 +
+ .../java/com/example/thumb/RegisterActivity.java   | 107 +++++++
+ app/src/main/res/drawable-v24/bb.jpg               | Bin 0 -> 39841 bytes
+ .../res/drawable-v24/ic_launcher_foreground.xml    |  30 ++
+ app/src/main/res/drawable/btn_bg.xml               |   6 +
+ .../main/res/drawable/ic_baseline_person_24.xml    |  10 +
+ app/src/main/res/drawable/ic_email.xml             |  10 +
+ app/src/main/res/drawable/ic_facebook.xml          |   5 +
+ app/src/main/res/drawable/ic_google.xml            |   7 +
+ .../main/res/drawable/ic_launcher_background.xml   | 170 ++++++++++++
+ app/src/main/res/drawable/ic_security.xml          |  10 +
+ app/src/main/res/drawable/input_bg.xml             |   6 +
+ app/src/main/res/layout/activity_login.xml         | 169 +++++++++++
+ app/src/main/res/layout/activity_main.xml          |  18 ++
+ app/src/main/res/layout/activity_register.xml      | 156 +++++++++++
+ app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml |   5 +
+ .../res/mipmap-anydpi-v26/ic_launcher_round.xml    |   5 +
+ app/src/main/res/mipmap-hdpi/ic_launcher.png       | Bin 0 -> 3593 bytes
+ app/src/main/res/mipmap-hdpi/ic_launcher_round.png | Bin 0 -> 5339 bytes
+ app/src/main/res/mipmap-mdpi/ic_launcher.png       | Bin 0 -> 2636 bytes
+ app/src/main/res/mipmap-mdpi/ic_launcher_round.png | Bin 0 -> 3388 bytes
+ app/src/main/res/mipmap-xhdpi/ic_launcher.png      | Bin 0 -> 4926 bytes
+ .../main/res/mipmap-xhdpi/ic_launcher_round.png    | Bin 0 -> 7472 bytes
+ app/src/main/res/mipmap-xxhdpi/ic_launcher.png     | Bin 0 -> 7909 bytes
+ .../main/res/mipmap-xxhdpi/ic_launcher_round.png   | Bin 0 -> 11873 bytes
+ app/src/main/res/mipmap-xxxhdpi/ic_launcher.png    | Bin 0 -> 10652 bytes
+ .../main/res/mipmap-xxxhdpi/ic_launcher_round.png  | Bin 0 -> 16570 bytes
+ app/src/main/res/values/colors.xml                 |  10 +
+ app/src/main/res/values/strings.xml                |   6 +
+ app/src/main/res/values/styles.xml                 |  10 +
+ .../test/java/com/example/thumb/ExampleUnitTest.kt |  17 ++
+ 38 files changed, 1256 insertions(+)
