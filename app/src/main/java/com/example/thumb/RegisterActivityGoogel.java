@@ -34,7 +34,6 @@ public class RegisterActivityGoogel extends AppCompatActivity {
         btnRegisterVoulenteer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 intent[0] =new Intent(RegisterActivityGoogel.this, VolunteerActivity.class);
                 startActivity(intent[0]);
                 finish();

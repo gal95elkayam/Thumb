@@ -100,7 +100,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/input_black"
         android:ems="10"
-        android:hint="Personal Number"
+        android:hint="Phone Number"
         android:inputType="numberDecimal"
         android:textAlignment="center"
         android:textColorHint="@color/colorBlack"

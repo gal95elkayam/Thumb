@@ -23,11 +23,12 @@
         <activity android:name=".activity_splash" />
         <activity android:name=".SubscribeActivity" />
         <activity android:name=".LocationActivity" />
-        <activity android:name=".LocationActivityTry" />
         <activity android:name=".firstScreenChat" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".LoginActivity"/>
-        <activity android:name=".PermissionActivity">
+        <activity android:name=".gpsActivate"/>
+        <activity android:name=".PermissionActivity"/>
+        <activity android:name=".perm">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->

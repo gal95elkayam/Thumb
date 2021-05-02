@@ -50,8 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-//        int radioId = radioGroup.getCheckedRadioButtonId();
-//        radioButton = findViewById(radioId);
 
 
         inputConformPassword=findViewById(R.id.inputConformPassword);
@@ -70,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                finish();
             }
         });
 
@@ -95,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
             showError(inputConformPassword,"Password not much!");
         }
         else {
-            mLoadingBar.setTitle("Registeration");
+            mLoadingBar.setTitle("Registration");
             mLoadingBar.setMessage("Please wait, while check your credentials");
             mLoadingBar.setCanceledOnTouchOutside(false);
             mLoadingBar.show();
@@ -103,10 +102,8 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        Toast.makeText(RegisterActivity.this,"Successfuly Registreation",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this,"Successfully Registration",Toast.LENGTH_SHORT).show();
                         mLoadingBar.dismiss();
-
-                        /////////////////////////
                         Intent intent;
                         if(rb.getText().equals("volunteer")){
                             intent=new Intent(RegisterActivity.this, VolunteerActivity.class);

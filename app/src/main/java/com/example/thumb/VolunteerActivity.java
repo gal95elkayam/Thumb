@@ -103,8 +103,6 @@ public class VolunteerActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
-                //For example,we may start an activity that lets the user pick data from a list; when it ends, it returns the selected data to the first activity.
-                // To do this, you call the startActivityForResult(Intent, int) version with a second integer parameter identifying the call
                 startActivityForResult(intent, 2);
             }
         });
@@ -155,8 +153,6 @@ public class VolunteerActivity extends AppCompatActivity {
                 bitmap.getWidth() / 2, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
-        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
-        //return _bmp;
         return output;
     }
 
@@ -190,15 +186,14 @@ public class VolunteerActivity extends AppCompatActivity {
         String name = inputName.getText().toString();
         String lastName = inputLastName.getText().toString();
         String id = inputId.getText().toString();
-        String phonelNumber = inputPhoneNumber.getText().toString();
-        // Bitmap emptyBitmap = Bitmap.createBitmap(selected_image.getWidth(), selected_image.getHeight(), selected_image.getConfig());
+        String phoneNumber = inputPhoneNumber.getText().toString();
         if (name.isEmpty()) {
             showError(inputName, "Your name is not valid!");
         } else if (lastName.isEmpty()) {
             showError(inputLastName, "Last Name is not valid!");
         } else if (id.isEmpty() || id.length() < 9) {
             showError(inputId, "Id must be 9 character");
-        } else if (phonelNumber.isEmpty() || phonelNumber.length() <10) {
+        } else if (phoneNumber.isEmpty() || phoneNumber.length() <10) {
             showError(inputPhoneNumber, "phone Number not valid!");
         }  else if(selected_image==null){
             showError(forPicIdentity, "put identity pic!");
@@ -210,10 +205,9 @@ public class VolunteerActivity extends AppCompatActivity {
             showError(forSelfie, "put selfie!");
         }
         else {
-            UserInformation userInformation = new UserInformation(name,lastName,id,phonelNumber,"volunteer");
+            UserInformation userInformation = new UserInformation(name,lastName,id,phoneNumber,"volunteer");
             FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
             myRef.child("users").child(user.getUid()).setValue(userInformation);
-
             StorageReference ref_child=mStorageRef.child(user.getUid() + "/" + "IdCard.jpg");
             StorageReference certificateImage=mStorageRef.child(user.getUid() + "/" + "dischargeCertificate.jpg");
             StorageReference profileImage=mStorageRef.child(user.getUid() + "/" + "profileVolunteer.jpg");
@@ -241,7 +235,7 @@ public class VolunteerActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
-                            //check if the user upload hoger
+                            //check if the user upload identity
                             firstpic_identity =true;
 
                         }

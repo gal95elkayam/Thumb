@@ -8,9 +8,4 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/okTextView"
-        android:layout_width="236dp"
-        android:layout_height="67dp"
-        android:text="TextView" />
 </LinearLayout>

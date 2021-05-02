@@ -57,14 +57,6 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private String[] PERMISSIONS = {
-            android.Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.SEND_SMS,
-    };
-    private PermissionUtility permissionUtility;
-
-
-
     private static final int RC_SIGN_IN = 101;
     private static final int RC_SIGN_IN_facebook = 100;
     private static final String TAG = "LoginActivity";
@@ -110,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                finish();
             }
         });
 
@@ -129,17 +122,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//        if(account == null){
-//            System.out.println("gal");
-//        }
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(getString(R.string.default_web_client_id))
-//                .requestEmail()
-//                .build();
-//        // Build a GoogleSignInClient with the options specified by gso.
-//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         btnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,9 +153,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 System.out.println("TAG=onSuccess"+TAG);
                 Log.i("LoginActivity", "@@@onSuccess");
-                ////////////////////////////////////////////////////////////////////
-                //setContentView(R.layout.activity_main);
-                //////////////////////////////////////////////////////////
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -200,8 +179,6 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-
-                            ////////////////////////////////////////
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -211,7 +188,6 @@ public class LoginActivity extends AppCompatActivity {
                             updateUI(null);
                         }
 
-                        // ...
                     }
                 });
     }
@@ -255,11 +231,6 @@ public class LoginActivity extends AppCompatActivity {
                         mLoadingBar.dismiss();
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
-//                        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-//                        //, this flag will cause any existing task that would be associated with the activity to be cleared before the activity is started
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        /////////////////////////////////////////
-//                        startActivity(intent);
                     }
                     else{
                         mLoadingBar.dismiss();
@@ -365,14 +336,19 @@ public class LoginActivity extends AppCompatActivity {
                     UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
                     Log.d(TAG, "User name: " + userInformation.getName() + ", type: " + userInformation.getTypeUser());
                     if(userInformation.getTypeUser().equals("volunteer")){
-                         intent[0] =new Intent(LoginActivity.this, PermissionActivity.class);
+                         intent[0] =new Intent(LoginActivity.this, firstScreenChat.class);
                     }
                     else{
-                        intent[0] =new Intent(LoginActivity.this, EmptyStackException.class);
+                        intent[0] =new Intent(LoginActivity.this, perm.class);
 
                     }
                     startActivity(intent[0]);
+                    finish();
                 }
+                else {
+                    Toast.makeText(LoginActivity.this,"dataSnapshot not exists ",Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
