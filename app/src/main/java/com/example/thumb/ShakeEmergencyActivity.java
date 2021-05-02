@@ -33,9 +33,7 @@ public class ShakeEmergencyActivity extends AppCompatActivity {
         mAccel = 10f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
-        //////////my
         animateSake();
-        ///////////////////////
     }
 
     private void animateSake() {
@@ -58,7 +56,7 @@ public class ShakeEmergencyActivity extends AppCompatActivity {
             mAccel = mAccel * 0.9f + delta;
             if (mAccel > 12) {
                 Toast.makeText(getApplicationContext(), "Shake event detected", Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(ShakeEmergencyActivity.this, LocationActivity.class);
+                Intent intent=new Intent(ShakeEmergencyActivity.this, LocationActivityTry.class);
                 startActivity(intent);
                 finish();
             }

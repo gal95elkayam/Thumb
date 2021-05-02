@@ -1,7 +1,12 @@
 package com.example.thumb;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -11,16 +16,19 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,6 +43,9 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import id.privy.livenessfirebasesdk.LivenessApp;
 import id.privy.livenessfirebasesdk.entity.LivenessItem;
@@ -47,6 +58,10 @@ public class ClientActivity extends AppCompatActivity {
     private static final String $LEFT_MOTION_INSTRUCTION = "Left";
     private static final String $RIGHT_MOTION_INSTRUCTION ="Right" ;
     private static final String TAG ="ClientActivity" ;
+    //private static final int PERMISSION_RQST_SEND = 0;
+    private static final int PERMISSION_RQST_SEND = 0;
+    private static final int PERMISSION_RQST_Location = 1;
+    private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
     //check if the user upload selfie
     boolean firstpic_self=false;
     //check if the user upload hoger
@@ -62,17 +77,55 @@ public class ClientActivity extends AppCompatActivity {
     Bitmap selected_image;
     Bitmap selcted_selfie;
     LivenessApp livenessApp;
+
+    Calendar myCalendar;
+    Button calender;
+
+
+    private String[] PERMISSIONS = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.SEND_SMS
+    };
+    private PermissionUtility permissionUtility;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
+         myCalendar = Calendar.getInstance();
+         calender = findViewById(R.id.Age);
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        calender.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(ClientActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
 
         myRef = FirebaseDatabase.getInstance().getReference();
         inputName = findViewById(R.id.name);
         inputLastName = findViewById(R.id.lastName);
         inputId = findViewById(R.id.id);
         inputPhoneNumber = findViewById(R.id.phone_number);
-        inputAge = findViewById(R.id.age);
+       // inputAge = findViewById(R.id.age);
         // Create a storage reference from our app
         mStorageRef = FirebaseStorage.getInstance().getReference();
         identity = (ImageView) findViewById(R.id.identity);
@@ -98,6 +151,17 @@ public class ClientActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ClientActivity.this.goto_navigation();
+                ///////////////////////
+//                checkPremissionForLocation();
+//                checkPremissionForSendSms();
+                /////////////////
+
+//                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+//                    checkPermission();
+//                }
+//                if (hasLocationPermission() && hasSendSmsPermission() ) {
+//                    ClientActivity.this.goto_navigation();
+//                }
             }
         });
         //for selfie
@@ -124,6 +188,52 @@ public class ClientActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+//    boolean hasLocationPermission () {
+//        //Check if the user has not granted permission...
+//        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            //Prompt the user to grant permission...
+//            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, PERMISSION_RQST_Location);
+//            return false;
+//        }
+//        //Return true if the permission is already granted...
+//        return true;
+//    }
+//
+//
+//    boolean hasSendSmsPermission() {
+//        //Check if the user has not granted permission...
+//        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+//            //Prompt the user to grant permission...
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, PERMISSION_RQST_SEND);
+//            return false;
+//        }
+//        //Return true if the permission is already granted...
+//        return true;
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        //Check the users response...
+//        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+//            ClientActivity.this.goto_navigation();
+//        }
+//    }
+
+
+
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        calender.setText(sdf.format(myCalendar.getTime()));
+    }
+
+
+
     public Bitmap getCroppedBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -163,7 +273,7 @@ public class ClientActivity extends AppCompatActivity {
         String lastName = inputLastName.getText().toString();
         String id = inputId.getText().toString();
         String phoneNumber = inputPhoneNumber.getText().toString();
-        String age = inputAge.getText().toString();
+       // String age = inputAge.getText().toString();
 
        // Bitmap emptyBitmap = Bitmap.createBitmap(selected_image.getWidth(), selected_image.getHeight(), selected_image.getConfig());
         if (name.isEmpty()) {
@@ -174,9 +284,10 @@ public class ClientActivity extends AppCompatActivity {
             showError(inputId, "Id must be 9 character");
         } else if (phoneNumber.isEmpty() || phoneNumber.length() < 10) {
             showError(inputPhoneNumber, "Phone Number not much!");
-        } else if (age.isEmpty()) {
-            showError(inputAge, "Age is not valid!");
         }
+//        else if (age.isEmpty()) {
+//            showError(inputAge, "Age is not valid!");
+//        }
         else if(selected_image==null){
             showError(forPic, "put pic!");
         }
@@ -184,23 +295,15 @@ public class ClientActivity extends AppCompatActivity {
             showError(forSelfie, "put selfie!");
         }
         else {
-            UserInformation userInformation = new UserInformation(name,lastName,id,phoneNumber,"client",age);
+            UserInformation userInformation = new UserInformation(name,lastName,id,phoneNumber,"client",calender.toString());
             FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
             myRef.child("users").child(user.getUid()).setValue(userInformation);
-
-
-
             StorageReference ref_child=mStorageRef.child(user.getUid() + "/" + "IdCard.jpg");
             StorageReference profileImage=mStorageRef.child(user.getUid() + "/" + "profile.jpg");
             Bitmap bitImage = ((BitmapDrawable)selfie.getDrawable()).getBitmap();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            //bitImage.compress(Bitmap.CompressFormat.PNG, 100, bos); // bmp is bitmap from user image file
-            //bitImage.recycle();
             byte[] byteArray = bos.toByteArray();
-            //String imageB64 = Base64.encodeToString(byteArray, Base64.URL_SAFE);
-            //Uri myUri = Uri.parse(imageB64);
-            ////
             UploadTask uploadTask = profileImage.putBytes(byteArray);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -210,7 +313,7 @@ public class ClientActivity extends AppCompatActivity {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(ClientActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(ClientActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
                     //check if the user upload hoger
                     firstpic_self=true;
                 }
@@ -224,8 +327,7 @@ public class ClientActivity extends AppCompatActivity {
                             //check if the user upload hoger
                             firstpic_hoger=true;
                             if(firstpic_self){
-
-                                Intent intent=new Intent(ClientActivity.this, firstScreenChat.class);
+                                Intent intent=new Intent(ClientActivity.this, ShakeEmergencyActivity.class);
                                 startActivity(intent);
                             }
 
@@ -243,10 +345,61 @@ public class ClientActivity extends AppCompatActivity {
 
     }
 
+//    private void checkPremissionForLocation() {
+//        if (ContextCompat.checkSelfPermission(ClientActivity.this,
+//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(ClientActivity.this,
+//                    Manifest.permission.ACCESS_FINE_LOCATION)){
+//                ActivityCompat.requestPermissions(ClientActivity.this,
+//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+//            }else{
+//                ActivityCompat.requestPermissions(ClientActivity.this,
+//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+//            }
+//        }
+//    }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+//        switch (requestCode){
+//            case 1: {
+//                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                    if (ContextCompat.checkSelfPermission(ClientActivity.this,
+//                            Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+//                      //  Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+//                    }
+//                }else{
+//                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+//                }
+//                return;
+//            }
+//            case PERMISSION_RQST_SEND: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                //    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+//                } else {Toast.makeText(getApplicationContext(), "SMS failed, you may try again later.", Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//            }
+//        }
+//    }
+//
+//    private void checkPremissionForSendSms() {
+//        //We’ll check the permission is granted or not . If not we’ll change
+//        if (ContextCompat.checkSelfPermission(this,Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.SEND_SMS)) {
+//            }
+//            else { ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, PERMISSION_RQST_SEND);
+//            }
+//        }
+//    }
+
 
     private void showError(EditText input, String s) {
         input.setError(s);
         input.requestFocus();
     }
+
+
+
 
 }

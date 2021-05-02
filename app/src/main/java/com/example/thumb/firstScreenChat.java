@@ -38,7 +38,7 @@ public class firstScreenChat extends AppCompatActivity {
         subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(firstScreenChat.this, ChatActivity.class);
+                Intent intent=new Intent(firstScreenChat.this, SubscribeActivity.class);
                 startActivity(intent);
                 finish();
 

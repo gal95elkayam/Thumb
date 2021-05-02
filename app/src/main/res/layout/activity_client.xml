@@ -4,24 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lookinggreen">
+    android:background="@drawable/client_volunteer_register">
 
+
+    <EditText
+        android:id="@+id/for_add_pic_identity2"
+        android:layout_width="21dp"
+        android:layout_height="6dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/cardview_shadow_end_color"
+        android:ems="10"
+        app:layout_constraintStart_toEndOf="@+id/identity_text"
+        app:layout_constraintTop_toBottomOf="@+id/identity"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="48dp"
         android:fontFamily="@font/bungee"
         android:text="Client"
         android:textColor="@color/colorBlack"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -29,9 +41,9 @@
         android:layout_width="123dp"
         android:layout_height="74dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/input_black"
         android:ems="10"
         android:hint="Name"
@@ -46,9 +58,9 @@
         android:id="@+id/lastName"
         android:layout_width="109dp"
         android:layout_height="74dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/input_black"
         android:ems="10"
         android:gravity="center_vertical"
@@ -58,10 +70,8 @@
         android:textColorHint="@color/colorBlack"
         app:layout_constraintBottom_toTopOf="@+id/id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/name"
-        app:layout_constraintTop_toTopOf="@+id/name"
-        app:layout_constraintVertical_bias="0.0"
         tools:ignore="RtlCompat" />
 
     <EditText
@@ -87,7 +97,7 @@
         android:layout_width="154dp"
         android:layout_height="53dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/input_black"
         android:ems="10"
         android:hint="Personal Number"
@@ -95,40 +105,23 @@
         android:textAlignment="center"
         android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/age"
+        app:layout_constraintTop_toBottomOf="@+id/Age"
         tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/age"
-        android:layout_width="151dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/input_black"
-        android:ems="10"
-        android:hint="Age"
-        android:inputType="number"
-        android:textAlignment="center"
-        android:textColorHint="@color/colorBlack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id" />
 
     <ImageView
         android:id="@+id/selfie"
         android:layout_width="102dp"
         android:layout_height="95dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+
         app:layout_constraintBottom_toBottomOf="@+id/logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/logo"
         app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/account_circle"
         tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
@@ -152,15 +145,14 @@
         android:layout_width="130dp"
         android:layout_height="45dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:text="Add picture"
-        android:textColor="@color/colorBlack"
         android:textAlignment="center"
+        android:textColor="@color/colorBlack"
+
         android:textSize="19dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/phone_number"
         app:layout_constraintTop_toBottomOf="@+id/phone_number"
         tools:ignore="MissingConstraints" />
 
@@ -196,13 +188,31 @@
         android:id="@+id/for_add_pic2"
         android:layout_width="30dp"
         android:layout_height="23dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
 
         android:background="@color/cardview_shadow_end_color"
         android:ems="10"
         app:layout_constraintTop_toBottomOf="@+id/selfie"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="274dp" />
+        tools:layout_editor_absoluteX="253dp" />
+
+    <Button
+        android:id="@+id/Age"
+        android:layout_width="151dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/input_black"
+        android:clickable="false"
+        android:cursorVisible="false"
+
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="Age"
+        android:textColorHint="@color/colorBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

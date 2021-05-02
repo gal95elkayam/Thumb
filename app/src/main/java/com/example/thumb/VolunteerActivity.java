@@ -260,7 +260,7 @@ public class VolunteerActivity extends AppCompatActivity {
                             //check if the user upload hoger
                             firstpic_certificate =true;
                             if(firstpic_identity && firstpic_self){
-                                Intent intent=new Intent(VolunteerActivity.this,ShakeEmergencyActivity.class);
+                                Intent intent=new Intent(VolunteerActivity.this,firstScreenChat.class);
                                 startActivity(intent);
                             }
 

@@ -3,6 +3,9 @@ package com.example.thumb;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -48,10 +51,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private String[] PERMISSIONS = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.SEND_SMS,
+    };
+    private PermissionUtility permissionUtility;
+
+
 
     private static final int RC_SIGN_IN = 101;
     private static final int RC_SIGN_IN_facebook = 100;
@@ -70,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     CallbackManager callbackManager;
     LoginManager loginManager;
     private FirebaseFirestore firebaseFirestore;
+    int couner_premission=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,6 +262,7 @@ public class LoginActivity extends AppCompatActivity {
 //                        startActivity(intent);
                     }
                     else{
+                        mLoadingBar.dismiss();
                         Toast.makeText(LoginActivity.this, "your password or email wrong, please try again",
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -334,7 +348,9 @@ public class LoginActivity extends AppCompatActivity {
     }
     //where we send the user
     private void updateUI(FirebaseUser user) {
+
         final Intent[] intent = new Intent[1];
+
         //check where we need to send each user--volunteer/need help
        // DatabaseReference myRef= FirebaseDatabase.getInstance().getReference();
         FirebaseDatabase myRef = FirebaseDatabase.getInstance();
@@ -346,14 +362,14 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "onDataChange: ");
 
                 if (dataSnapshot.exists()) {
-
                     UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
                     Log.d(TAG, "User name: " + userInformation.getName() + ", type: " + userInformation.getTypeUser());
                     if(userInformation.getTypeUser().equals("volunteer")){
-                         intent[0] =new Intent(LoginActivity.this, firstScreenChat.class);
+                         intent[0] =new Intent(LoginActivity.this, PermissionActivity.class);
                     }
                     else{
-                        intent[0] =new Intent(LoginActivity.this, ShakeEmergencyActivity.class);
+                        intent[0] =new Intent(LoginActivity.this, EmptyStackException.class);
+
                     }
                     startActivity(intent[0]);
                 }
@@ -366,29 +382,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        ValueEventListener postListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // Get Post object and use the values to update the UI
-//                UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
-//                if(userInformation.getTypeUser().equals("volunteer")){
-//                     intent[0] =new Intent(LoginActivity.this, firstScreenChat.class);
-//                }
-//                else{
-//                    intent[0]=new Intent(LoginActivity.this, ShakeEmergencyActivity.class);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-//            }
-//        };
-       // tripsRef.addListenerForSingleValueEvent(postListener);
-
-       // Intent intent=new Intent(LoginActivity.this, notificationActivity.class);
     }
-
 
 }

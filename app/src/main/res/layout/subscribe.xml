@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/subscribe_screen"
    >
 
 
@@ -19,10 +20,10 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="73dp"
         android:layout_marginLeft="73dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginRight="67dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginRight="66dp"
+        android:layout_marginBottom="107dp"
         android:fontFamily="@font/bungee"
         android:gravity="center_horizontal"
         android:text="subscribe / UNSUBSCRITE "
@@ -30,38 +31,37 @@
         android:textSize="25sp"
         tools:ignore="MissingConstraints" />
 
-
     <Button
         android:id="@+id/buttonSubscribe"
-        android:layout_width="188dp"
-        android:layout_height="68dp"
+        android:layout_width="140dp"
+        android:layout_height="44dp"
         android:layout_above="@+id/buttonUnSubscribe"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="95dp"
-        android:layout_marginLeft="95dp"
-        android:layout_marginEnd="127dp"
-        android:layout_marginRight="127dp"
-        android:layout_marginBottom="58dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginRight="110dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/input_black"
         android:text="Subscribe" />
 
     <Button
         android:id="@+id/buttonUnSubscribe"
-        android:layout_width="197dp"
-        android:layout_height="72dp"
+        android:layout_width="140dp"
+        android:layout_height="44dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginEnd="114dp"
-        android:layout_marginRight="114dp"
-        android:layout_marginBottom="203dp"
+        android:layout_marginStart="142dp"
+        android:layout_marginLeft="142dp"
+        android:layout_marginEnd="107dp"
+        android:layout_marginRight="107dp"
+        android:layout_marginBottom="223dp"
         android:background="@drawable/input_black"
         android:text="UnSubscribe" />
 
@@ -99,6 +99,12 @@
         android:layout_marginBottom="57dp"
         android:background="@drawable/input_black"
         android:text="CHAT" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="?attr/homeAsUpIndicator" />
 
 
 </RelativeLayout>
