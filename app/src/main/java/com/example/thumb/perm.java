@@ -38,6 +38,9 @@ public class perm extends AppCompatActivity {
 
     }
 
+
+    //If ONE permission is not granted, then we return false
+    //If all pass, return true
     @RequiresApi(api = Build.VERSION_CODES.M)
     private boolean arePermissionsEnabled(){
         for(String permission : permissions){
@@ -47,6 +50,8 @@ public class perm extends AppCompatActivity {
         return true;
     }
 
+    //Create a new array of ungranted permissions
+    //Request remaining permissions
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void requestMultiplePermissions(){
         List<String> remainingPermissions = new ArrayList <>();
@@ -58,6 +63,10 @@ public class perm extends AppCompatActivity {
         requestPermissions(remainingPermissions.toArray(new String[remainingPermissions.size()]), 101);
     }
 
+    //Show our message explaining to the user why permissions should be granted
+    //If the user agrees, we repeat the process from the start by calling requestMultiplePermissions()
+    //If the user rejects, do nothing
+
     @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -65,9 +74,12 @@ public class perm extends AppCompatActivity {
         if(requestCode == 101){
             for(int i=0;i<grantResults.length;i++){
                 if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                    //We loop over all the results and check if at least 1 is not granted. If that’s the case, we display our alert dialog:
                     if(shouldShowRequestPermissionRationale(permissions[i])){
                         new AlertDialog.Builder(this)
-                                .setMessage("Your error message here")
+                                .setMessage("Location and Send SMS " + "" +
+                                        "permissions are required to do the task.")
+                                .setTitle("Please grant those permissions")
                                 .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

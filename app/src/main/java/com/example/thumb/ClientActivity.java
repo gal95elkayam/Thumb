@@ -254,7 +254,7 @@ public class ClientActivity extends AppCompatActivity {
                             //check if the user upload identity
                             firstpic_identity =true;
                             if(firstpic_self){
-                                Intent intent=new Intent(ClientActivity.this, PermissionActivity.class);
+                                Intent intent=new Intent(ClientActivity.this, perm.class);
                                 startActivity(intent);
                                 finish();
                             }

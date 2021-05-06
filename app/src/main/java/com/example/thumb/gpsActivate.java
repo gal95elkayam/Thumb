@@ -24,16 +24,6 @@ public class gpsActivate  extends AppCompatActivity {
         }
     }
 
-//    public void statusCheck() {
-//        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//
-//        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//            buildAlertMessageNoGps();
-//        }
-//        else{
-//            start();
-//        }
-//    }
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
