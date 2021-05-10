@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +25,8 @@ public class SubscribeActivity extends AppCompatActivity {
     private static final String FCM_CHANNEL_ID="FCM_CHANNEL_ID";
     private Button mBtnSubscribe;
     private Button mUnBtnSubscribe;
-    private Button mbuttonChat;
     static TextView mOutput;
+    private ImageView backToChat;
 
 
     @Override
@@ -40,7 +41,17 @@ public class SubscribeActivity extends AppCompatActivity {
         }
         mBtnSubscribe = findViewById(R.id.buttonSubscribe);
         mUnBtnSubscribe = findViewById(R.id.buttonUnSubscribe);
-        mbuttonChat=findViewById(R.id.buttonChat);
+        backToChat=findViewById(R.id.back);
+        backToChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(SubscribeActivity.this, ChatActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         mOutput =  (TextView) findViewById(R.id.textView2);
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
@@ -92,14 +103,7 @@ public class SubscribeActivity extends AppCompatActivity {
             }
         });
 
-        mbuttonChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(SubscribeActivity.this, ChatActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+
 
     }
 

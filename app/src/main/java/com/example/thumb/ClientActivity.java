@@ -52,6 +52,7 @@ public class ClientActivity extends AppCompatActivity {
     private static final String $LEFT_MOTION_INSTRUCTION = "Left";
     private static final String $RIGHT_MOTION_INSTRUCTION ="Right" ;
     private static final String TAG ="ClientActivity" ;
+    private boolean selfieEnter=false;
     //check if the user upload selfie
     boolean firstpic_self=false;
     //check if the user upload identity
@@ -218,8 +219,9 @@ public class ClientActivity extends AppCompatActivity {
         else if(selected_image==null){
             showError(forPic, "put pic!");
         }
-        else if(selfie==null){
+        else if(selfie.getDrawable() != null && !selfieEnter){
             showError(forSelfie, "put selfie!");
+            selfieEnter=true;
         }
         else {
             UserInformation userInformation = new UserInformation(name,lastName,id,phoneNumber,"client",calender.toString());
@@ -256,7 +258,7 @@ public class ClientActivity extends AppCompatActivity {
                             if(firstpic_self){
                                 Intent intent=new Intent(ClientActivity.this, perm.class);
                                 startActivity(intent);
-                                finish();
+                               finish();
                             }
 
                         }

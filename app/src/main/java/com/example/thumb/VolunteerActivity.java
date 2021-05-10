@@ -47,6 +47,7 @@ public class VolunteerActivity extends AppCompatActivity {
     private static final String $LEFT_MOTION_INSTRUCTION = "Left";
     private static final String $RIGHT_MOTION_INSTRUCTION ="Right" ;
     private static final String TAG ="VolunteerActivity" ;
+    private boolean selfieEnter=false;
     //check if the user upload selfie
     boolean firstpic_self=false;
     //check if the user upload identity
@@ -201,8 +202,9 @@ public class VolunteerActivity extends AppCompatActivity {
         else if(selected_image_certificate==null) {
             showError(forCertificate, "put certificate pic!");
         }
-        else if(selfie==null){
+        else if(selfie.getDrawable() != null && !selfieEnter){
             showError(forSelfie, "put selfie!");
+            selfieEnter=true;
         }
         else {
             UserInformation userInformation = new UserInformation(name,lastName,id,phoneNumber,"volunteer");
@@ -224,7 +226,7 @@ public class VolunteerActivity extends AppCompatActivity {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
                     //check if the user upload hoger
                     firstpic_self=true;
                 }
@@ -234,7 +236,7 @@ public class VolunteerActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
                             //check if the user upload identity
                             firstpic_identity =true;
 
@@ -250,12 +252,13 @@ public class VolunteerActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
                             //check if the user upload hoger
                             firstpic_certificate =true;
                             if(firstpic_identity && firstpic_self){
                                 Intent intent=new Intent(VolunteerActivity.this,firstScreenChat.class);
                                 startActivity(intent);
+                                finish();
                             }
 
                         }

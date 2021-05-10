@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_new_power"
+    android:background="@drawable/login_activity"
     tools:context=".LoginActivity">
 
 
@@ -25,6 +25,7 @@
 
     <EditText
         android:id="@+id/inputPassword"
+        android:textStyle="bold"
         android:layout_width="254dp"
         android:layout_height="47dp"
         android:layout_marginTop="16dp"
@@ -47,6 +48,7 @@
 
     <EditText
         android:id="@+id/inputEmail"
+        android:textStyle="bold"
         android:layout_width="254dp"
         android:layout_height="47dp"
         android:layout_marginStart="32dp"
@@ -83,6 +85,7 @@
 
     <Button
         android:id="@+id/btnlogin"
+        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
@@ -107,23 +110,29 @@
         app:layout_constraintTop_toBottomOf="@+id/btnlogin">
 
         <TextView
+            android:id="@+id/textViewSignUp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SignUp"
+            android:textColor="@color/colorRed" />
+
+        <TextView
+            android:id="@+id/dontHaveAccount"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dont have an Account?"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/textViewSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SignUp"
-            android:textColor="@color/colorRed" />
+
 
     </LinearLayout>
 
 
     <Button
         android:id="@+id/btnGoogle"
+        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -147,6 +156,7 @@
 
     <Button
         android:id="@+id/btnFacebook"
+        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -155,8 +165,6 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:background="@drawable/input_black"
-        android:drawableStart="@drawable/ic_facebook"
-
         android:drawablePadding="10dp"
         android:paddingLeft="20dp"
         android:text="Facebook"

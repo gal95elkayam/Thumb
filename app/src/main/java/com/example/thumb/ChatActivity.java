@@ -124,8 +124,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         mFMessages = new ArrayList<FriendlyMessage>();
 
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
                             String fromUserId = ds.child("fromUserId").getValue(String.class);
-                            String name = ds.child("name").getValue(String.class);
+                            String name =  ds.child("name").getValue(String.class);
                             String text = ds.child("text").getValue(String.class);
                             String timestamp = ds.child("timestamp").getValue(String.class);
                             Log.d("TAG", fromUserId + " / " + name + " / " + text + " / " + timestamp);

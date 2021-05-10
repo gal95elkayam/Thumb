@@ -3,9 +3,7 @@ package com.example.thumb;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -34,9 +32,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,9 +52,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.EmptyStackException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -65,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
-    TextView btn;
+    TextView signUp;
     TextView forgotPassword;
     EditText inputEmail,inputPassword;
     Button btnLogin;
@@ -85,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         forgotPassword=findViewById(R.id.forgotPassword);
-        btn=findViewById(R.id.textViewSignUp);
+        signUp =findViewById(R.id.textViewSignUp);
         inputEmail=findViewById(R.id.inputEmail);
         inputPassword=findViewById(R.id.inputPassword);
         btnLogin=findViewById(R.id.btnlogin);
@@ -98,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoadingBar=new ProgressDialog(LoginActivity.this);
         btnGoogle=findViewById(R.id.btnGoogle);
         mAuth=FirebaseAuth.getInstance();
-        btn.setOnClickListener(new View.OnClickListener() {
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
@@ -106,18 +104,28 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().sendPasswordResetEmail(inputEmail.toString())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
+                if(inputEmail.getText().toString().trim().isEmpty()){
+                    Toast.makeText(LoginActivity.this, "please enter your email and then click Forgot Password", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    mAuth.sendPasswordResetEmail(inputEmail.getText().toString().trim())
+                            .addOnSuccessListener(new OnSuccessListener() {
+                                @Override
+                                public void onSuccess(Object o) {
                                     Toast.makeText(LoginActivity.this, "Email sent", Toast.LENGTH_LONG).show();
+
                                 }
-                            }
-                        });
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
 
             }
         });
@@ -152,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 System.out.println("TAG=onSuccess"+TAG);
-                Log.i("LoginActivity", "@@@onSuccess");
+                Log.i("LoginActivity", "onSuccess");
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -216,8 +224,8 @@ public class LoginActivity extends AppCompatActivity {
         if(email.isEmpty() || !email.contains("@")){
             showError(inputEmail,"Email is not valid!");
         }
-        else if (password.isEmpty() || password.length()<7){
-            showError(inputPassword,"Password must be 7 character");
+        else if (password.isEmpty() || password.length()<6){
+            showError(inputPassword,"Password must be 6 character");
         }
         else {
             mLoadingBar.setTitle("Login");
@@ -304,7 +312,7 @@ public class LoginActivity extends AppCompatActivity {
                             else{
                                 Intent intent=new  Intent(LoginActivity.this, RegisterActivityGoogel.class);
                                 startActivity(intent);
-                                finish();;
+                                finish();
 
                             }
                         } else {
@@ -344,9 +352,33 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     startActivity(intent[0]);
                     finish();
+
                 }
                 else {
-                    Toast.makeText(LoginActivity.this,"dataSnapshot not exists ",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(LoginActivity.this,"dataSnapshot not exists ",Toast.LENGTH_SHORT).show();
+                    //delete user for reregister because he didnt finish the all progress of register
+                    final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    AuthCredential authCredential = EmailAuthProvider.getCredential(inputEmail.getText().toString().trim(), inputPassword.getText().toString().trim());
+
+                    firebaseUser.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "User account deleted!");
+                                        Toast.makeText(LoginActivity.this,"Please re-register, The registration process has stopped ",Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+
+
+
                 }
 
             }

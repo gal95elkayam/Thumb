@@ -67,12 +67,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ViewHolderYou viewHolderYou = (ViewHolderYou) v;
             //////////////////////////////////////////////////////////////////////////////////////////////
             //viewHolderYou.name.setText(String.format("%s","gal"));
-            FirebaseUser user = FireHelper.getInstance().AuthInit().getCurrentUser();
-            viewHolderYou.name.setText(String.format("%s",user.getDisplayName()));
+            //FirebaseUser user = FireHelper.getInstance().AuthInit().getCurrentUser();
+            viewHolderYou.name.setText(String.format("%s",listItem.get(pos).getName()));
             //////////////////////////////////////////////////////////////////////////////
             viewHolderYou.messageBody.setText(String.format("%s", listItem.get(pos).getText()));
             viewHolderYou.messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", listItem.get(pos).getMessageTime()));
-           // messageTime = (TextView) messageTime.findViewById(R.id.message_time);
+            // messageTime = (TextView) messageTime.findViewById(R.id.message_time);
             //messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",new Date().getTime()));
             GradientDrawable drawable = (GradientDrawable) viewHolderYou.avatar.getBackground();
             drawable.setColor(Color.GRAY);

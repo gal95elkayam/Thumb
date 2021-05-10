@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
-    android:background="@drawable/activity_register">
+    android:background="@drawable/register_new_activity">
 
     <TextView
         android:id="@+id/logo"
@@ -18,13 +18,13 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.175"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.102" />
+        app:layout_constraintVertical_bias="0.107" />
 
     <EditText
         android:id="@+id/inputUsername"
+        android:textStyle="bold"
         android:layout_width="254dp"
         android:layout_height="47dp"
         android:layout_marginStart="32dp"
@@ -48,6 +48,7 @@
 
     <EditText
         android:id="@+id/inputEmail"
+        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -69,6 +70,7 @@
 
     <EditText
         android:id="@+id/inputPassword"
+        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -91,6 +93,7 @@
 
     <EditText
         android:id="@+id/inputConformPassword"
+        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -112,6 +115,7 @@
 
     <Button
         android:id="@+id/btnRegister"
+        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -124,6 +128,7 @@
 
     <TextView
         android:id="@+id/alreadyHaveAccount"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -135,31 +140,53 @@
         app:layout_constraintStart_toStartOf="@+id/btnRegister"
         app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
+    <EditText
+        android:id="@+id/getCheckedRadioButtonId"
+        android:layout_width="21dp"
+        android:layout_height="7dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:background="@color/cardview_shadow_end_color"
+        android:ems="10"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+        app:layout_constraintEnd_toStartOf="@+id/radioGroup"
+        app:layout_constraintHorizontal_bias="0.988"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputConformPassword"
+        app:layout_constraintVertical_bias="0.022"
+        tools:ignore="MissingConstraints" />
+
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="150dp"
         android:layout_height="74dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginRight="108dp"
         app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputConformPassword"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="242dp">
+        tools:ignore="MissingConstraints">
+
 
         <RadioButton
             android:id="@+id/radio_volunteer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="volunteer" />
+            android:text="volunteer"
+            android:textStyle="bold" />
 
         <RadioButton
             android:id="@+id/radio_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="need help" />
+            android:text="need help"
+            android:textStyle="bold" />
 
     </RadioGroup>
 

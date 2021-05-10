@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
     TextView btn;
-    private EditText inputUserName,inputPassword,inputEmail,inputConformPassword;
+    private EditText inputUserName,inputPassword,inputEmail,inputConformPassword,getCheckedRadioButtonId;
     Button btnRegister;
     private FirebaseAuth mAuth;
     private ProgressDialog mLoadingBar;
@@ -37,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         inputUserName=findViewById(R.id.inputUsername);
         inputEmail=findViewById(R.id.inputEmail);
         inputPassword=findViewById(R.id.inputPassword);
-
+        getCheckedRadioButtonId=findViewById(R.id.getCheckedRadioButtonId);
         radioGroup = findViewById(R.id.radioGroup);
         radioGroup.clearCheck();
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -87,11 +87,15 @@ public class RegisterActivity extends AppCompatActivity {
         else if (email.isEmpty() || !email.contains("@")){
             showError(inputEmail,"Email is not valid!");
         }
-        else if(password.isEmpty() || password.length()<7){
-            showError(inputPassword,"Password must be 7 character");
+        else if(password.isEmpty() || password.length()<6){
+            showError(inputPassword,"Password should be at least 6 characters");
         }
         else if(conformpassword.isEmpty() || !conformpassword.equals(password)){
             showError(inputConformPassword,"Password not much!");
+        }
+        // no radio buttons are checked
+        else if(radioGroup.getCheckedRadioButtonId() == -1){
+            showError(getCheckedRadioButtonId, "select button- volunteer/need help");
         }
         else {
             mLoadingBar.setTitle("Registration");
@@ -115,6 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
+
 
 
                     }

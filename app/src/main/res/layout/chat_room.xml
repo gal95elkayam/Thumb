@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/chat_power"
     android:clipToPadding="false"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    android:background="@drawable/chat_power"
     tools:context="com.">
 
 
     <Button
         android:id="@+id/startbutton"
-        android:layout_width="140dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="236dp"
+        android:layout_width="151dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="248dp"
         android:background="@drawable/input_black"
         android:text="start"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/subscribe"
-        android:layout_width="140dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="151dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/input_black"
         android:text="subscribe"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.138"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startbutton" />
 
@@ -45,12 +46,27 @@
         android:gravity="center_horizontal"
         android:text="Chat and subscribe "
         android:textAlignment="center"
-        android:textSize="25sp"
+        android:textColor="@color/colorBlack"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
