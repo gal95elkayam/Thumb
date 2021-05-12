@@ -2,6 +2,7 @@ package com.example.thumb;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -10,6 +11,7 @@ import android.content.pm.PackageInfo;
 
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -52,6 +54,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -187,13 +190,13 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            updateUI(user,"Facebook");
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            updateUI(null,"Facebook");
                         }
 
                     }
@@ -238,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
                         mLoadingBar.dismiss();
                         FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
+                        updateUI(user,"user");
                     }
                     else{
                         mLoadingBar.dismiss();
@@ -296,6 +299,7 @@ public class LoginActivity extends AppCompatActivity {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -304,10 +308,12 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this,user.getEmail()+user.getDisplayName(),Toast.LENGTH_SHORT).show();
                             //////////////////////////////////////////////////////////////////////////////////////////////////
                             //to check if it's the first time user logs in, yes->need to register'no->have a count
-                            boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
+                            boolean isNew = Objects.requireNonNull(task.getResult().getAdditionalUserInfo()).isNewUser();
                             ///////////////////////////////////////////////////////////////////////////////
                             if(!isNew) {
-                                updateUI(user);
+                               updateUI(user,"Google");
+                                //updateUIGoogle(user);
+
                             }
                             else{
                                 Intent intent=new  Intent(LoginActivity.this, RegisterActivityGoogel.class);
@@ -325,8 +331,82 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void updateUIGoogle(FirebaseUser user) {
+
+        final Intent[] intent = new Intent[1];
+
+        //check where we need to send each user--volunteer/need help
+        // DatabaseReference myRef= FirebaseDatabase.getInstance().getReference();
+        FirebaseDatabase myRef = FirebaseDatabase.getInstance();
+        DatabaseReference tripsRef = myRef.getReference().child("users").child(user.getUid());
+        tripsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+               public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.d(TAG, "onDataChange: ");
+
+                if (dataSnapshot.exists()) {
+                    UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
+                    Log.d(TAG, "User name: " + userInformation.getName() + ", type: " + userInformation.getTypeUser());
+                    if (userInformation.getTypeUser().equals("volunteer")) {
+                        intent[0] = new Intent(LoginActivity.this, firstScreenChat.class);
+                    } else {
+                        intent[0] = new Intent(LoginActivity.this, perm.class);
+
+                    }
+                    startActivity(intent[0]);
+                    finish();
+
+                } else {
+                    // Toast.makeText(LoginActivity.this,"dataSnapshot not exists ",Toast.LENGTH_SHORT).show();
+                    //delete user for reregister because he didnt finish the all progress of register
+                    final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    try {
+                        AuthCredential credentialg = GoogleAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getUid(), null);
+                        // Prompt the user to re-provide their sign-in credentials
+                        if (firebaseUser != null) {
+                            firebaseUser.reauthenticate(credentialg)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            firebaseUser.delete()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Log.d("Tag", "User account deleted.");
+
+                                                            }
+                                                        }
+                                                    });
+
+                                        }
+                                    });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+
+
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+    }
+
+
     //where we send the user
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(FirebaseUser user, final String typeUser) {
 
         final Intent[] intent = new Intent[1];
 
@@ -355,30 +435,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
                 else {
-                   // Toast.makeText(LoginActivity.this,"dataSnapshot not exists ",Toast.LENGTH_SHORT).show();
-                    //delete user for reregister because he didnt finish the all progress of register
-                    final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                    AuthCredential authCredential = EmailAuthProvider.getCredential(inputEmail.getText().toString().trim(), inputPassword.getText().toString().trim());
+                    switch (typeUser){
+                        case "user":
+                            deleteUser();
+                            break;
+                        case "Google":
+                            deleteGoogleUser();
+                            break;
 
-                    firebaseUser.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d(TAG, "User account deleted!");
-                                        Toast.makeText(LoginActivity.this,"Please re-register, The registration process has stopped ",Toast.LENGTH_SHORT).show();
-
-                                    }
-                                }
-                            });
-                        }
-                    });
-
-
-
-
+                    }
                 }
 
             }
@@ -389,6 +454,60 @@ public class LoginActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
+    }
+
+    //delete user for reregister because he didnt finish the all progress of register
+    public void deleteUser(){
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        AuthCredential authCredential = EmailAuthProvider.getCredential(inputEmail.getText().toString().trim(), inputPassword.getText().toString().trim());
+        firebaseUser.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User account deleted!");
+                            Toast.makeText(LoginActivity.this,"Please re-register, The registration process has stopped ",Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+            }
+        });
+    }
+    //delete user for reregister because he didnt finish the all progress of register
+    public void deleteGoogleUser() {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            AuthCredential credentialg = GoogleAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getUid(), null);
+            // Prompt the user to re-provide their sign-in credentials
+            if (firebaseUser != null) {
+                firebaseUser.reauthenticate(credentialg)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                firebaseUser.delete()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d("Tag", "User account deleted.");
+                                                    Toast.makeText(LoginActivity.this,"Please re-register, The registration process has stopped ",Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            }
+                                        });
+
+                            }
+                        });
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
     }
 

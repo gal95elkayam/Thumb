@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
-    android:background="@drawable/register_new_activity">
+    android:background="@drawable/new_re_activity">
 
     <TextView
         android:id="@+id/logo"
