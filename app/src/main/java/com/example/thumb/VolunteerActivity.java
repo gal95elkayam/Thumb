@@ -194,87 +194,92 @@ public class VolunteerActivity extends AppCompatActivity {
             showError(inputLastName, "Last Name is not valid!");
         } else if (id.isEmpty() || id.length() < 9) {
             showError(inputId, "Id must be 9 character");
-        } else if (phoneNumber.isEmpty() || phoneNumber.length() <10) {
+        } else if (phoneNumber.isEmpty() || phoneNumber.length() < 10) {
             showError(inputPhoneNumber, "phone Number not valid!");
-        }  else if(selected_image==null){
+        } else if (selected_image == null) {
             showError(forPicIdentity, "put identity pic!");
-        }
-        else if(selected_image_certificate==null) {
+        } else if (selected_image_certificate == null) {
             showError(forCertificate, "put certificate pic!");
+        } else if (selfie.getDrawable() != null) {
+            try {
+                Bitmap bitImage = ((BitmapDrawable) selfie.getDrawable()).getBitmap();
+                uploafFile(name, lastName, id, phoneNumber);
+            } catch (Exception e) {
+                showError(forSelfie, "put selfie!");
+                Toast.makeText(VolunteerActivity.this, "failure", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            uploafFile(name, lastName, id, phoneNumber);
         }
-        else if(selfie.getDrawable() != null && !selfieEnter){
-            showError(forSelfie, "put selfie!");
-            selfieEnter=true;
-        }
-        else {
-            UserInformation userInformation = new UserInformation(name,lastName,id,phoneNumber,"volunteer");
-            FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-            myRef.child("users").child(user.getUid()).setValue(userInformation);
-            StorageReference ref_child=mStorageRef.child(user.getUid() + "/" + "IdCard.jpg");
-            StorageReference certificateImage=mStorageRef.child(user.getUid() + "/" + "dischargeCertificate.jpg");
-            StorageReference profileImage=mStorageRef.child(user.getUid() + "/" + "profileVolunteer.jpg");
-            Bitmap bitImage = ((BitmapDrawable)selfie.getDrawable()).getBitmap();
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            byte[] byteArray = bos.toByteArray();
-            UploadTask uploadTask = profileImage.putBytes(byteArray);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(VolunteerActivity.this,"failure",Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
-                    //check if the user upload hoger
-                    firstpic_self=true;
-                }
-            });
+    }
 
-            ref_child.putFile(imageuri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           // Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
-                            //check if the user upload identity
-                            firstpic_identity =true;
+    private void uploafFile(String name, String lastName, String id, String phoneNumber) {
+        UserInformation userInformation = new UserInformation(name, lastName, id, phoneNumber, "volunteer");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        myRef.child("users").child(user.getUid()).setValue(userInformation);
+        StorageReference ref_child = mStorageRef.child(user.getUid() + "/" + "IdCard.jpg");
+        StorageReference certificateImage = mStorageRef.child(user.getUid() + "/" + "dischargeCertificate.jpg");
+        UploadTask uploadTask = null;
+        StorageReference profileImage = mStorageRef.child(user.getUid() + "/" + "profileVolunteer.jpg");
+        Bitmap bitImage = ((BitmapDrawable) selfie.getDrawable()).getBitmap();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        byte[] byteArray = bos.toByteArray();
+        uploadTask = profileImage.putBytes(byteArray);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(VolunteerActivity.this, "failure", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                //Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                //check if the user upload hoger
+                firstpic_self = true;
+            }
+        });
+        ref_child.putFile(imageuri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                        //check if the user upload identity
+                        firstpic_identity = true;
 
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(VolunteerActivity.this, "FailureL", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        certificateImage.putFile(imageuri_certificate)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                        //check if the user upload hoger
+                        firstpic_certificate = true;
+                        if (firstpic_identity && firstpic_self) {
+                            Intent intent = new Intent(VolunteerActivity.this, firstScreenChat.class);
+                            startActivity(intent);
+                            finish();
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(VolunteerActivity.this,"FailureL",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            certificateImage.putFile(imageuri_certificate)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           // Toast.makeText(VolunteerActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
-                            //check if the user upload hoger
-                            firstpic_certificate =true;
-                            if(firstpic_identity && firstpic_self){
-                                Intent intent=new Intent(VolunteerActivity.this,firstScreenChat.class);
-                                startActivity(intent);
-                                finish();
-                            }
 
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(VolunteerActivity.this,"FailureL",Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(VolunteerActivity.this, "FailureL", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-
-
-        }
 
     }
+
 
     private void showError(EditText input, String s) {
         input.setError(s);

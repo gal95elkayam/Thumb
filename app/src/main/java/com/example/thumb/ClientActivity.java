@@ -13,7 +13,9 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -22,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,11 +38,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 import id.privy.livenessfirebasesdk.LivenessApp;
 import id.privy.livenessfirebasesdk.entity.LivenessItem;
@@ -132,6 +137,7 @@ public class ClientActivity extends AppCompatActivity {
         });
         btnRegisterSolidier=findViewById(R.id.btnRegisterClient);
         btnRegisterSolidier.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 ClientActivity.this.goto_navigation();
@@ -215,64 +221,19 @@ public class ClientActivity extends AppCompatActivity {
             showError(inputId, "Id must be 9 character");
         } else if (phoneNumber.isEmpty() || phoneNumber.length() < 10) {
             showError(inputPhoneNumber, "Phone Number not much!");
-        }
-        else if(selected_image==null){
+        } else if (selected_image == null) {
             showError(forPic, "put pic!");
+        } else if (selfie.getDrawable() != null) {
+            try {
+                Bitmap bitImage = ((BitmapDrawable) selfie.getDrawable()).getBitmap();
+                uploafFile( name,  lastName,  id,  phoneNumber);
+            } catch (Exception e) {
+                showError(forSelfie, "put selfie!");
+                Toast.makeText(ClientActivity.this, "failure", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            uploafFile( name,  lastName,  id,  phoneNumber);
         }
-        else if(selfie.getDrawable() != null && !selfieEnter){
-            showError(forSelfie, "put selfie!");
-            selfieEnter=true;
-        }
-        else {
-            UserInformation userInformation = new UserInformation(name,lastName,id,phoneNumber,"client",calender.toString());
-            FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-            myRef.child("users").child(user.getUid()).setValue(userInformation);
-            StorageReference ref_child=mStorageRef.child(user.getUid() + "/" + "IdCard.jpg");
-            StorageReference profileImage=mStorageRef.child(user.getUid() + "/" + "profile.jpg");
-            Bitmap bitImage = ((BitmapDrawable)selfie.getDrawable()).getBitmap();
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            byte[] byteArray = bos.toByteArray();
-            UploadTask uploadTask = profileImage.putBytes(byteArray);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(ClientActivity.this,"failure",Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                   // Toast.makeText(ClientActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
-                    //check if the user upload identity
-                    firstpic_self=true;
-                }
-            });
-
-            ref_child.putFile(imageuri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(ClientActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
-                            //check if the user upload identity
-                            firstpic_identity =true;
-                            if(firstpic_self){
-                                Intent intent=new Intent(ClientActivity.this, perm.class);
-                                startActivity(intent);
-                               finish();
-                            }
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ClientActivity.this,"FailureL",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-
-        }
-
     }
 
 
@@ -282,7 +243,56 @@ public class ClientActivity extends AppCompatActivity {
         input.requestFocus();
     }
 
+    void uploafFile(String name, String lastName, String id, String phoneNumber){
+        UserInformation userInformation = new UserInformation(name, lastName, id, phoneNumber, "client", calender.toString());
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        myRef.child("users").child(user.getUid()).setValue(userInformation);
+        StorageReference ref_child = mStorageRef.child(user.getUid() + "/" + "IdCard.jpg");
+        UploadTask uploadTask = null;
+        StorageReference profileImage = mStorageRef.child(user.getUid() + "/" + "profile.jpg");
+        Bitmap bitImage = ((BitmapDrawable) selfie.getDrawable()).getBitmap();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        byte[] byteArray = bos.toByteArray();
+        uploadTask = profileImage.putBytes(byteArray);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(ClientActivity.this, "failure", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Failed to upload");
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // Toast.makeText(ClientActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                //check if the user upload identity
+                firstpic_self = true;
+            }
+        });
+
+        ref_child.putFile(imageuri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                      //  Toast.makeText(ClientActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        //check if the user upload identity
+                        firstpic_identity = true;
+                        if (firstpic_self) {
+                            Intent intent = new Intent(ClientActivity.this, perm.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ClientActivity.this, "FailureL", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
+    }
 
 }

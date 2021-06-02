@@ -184,13 +184,25 @@ public class LoginActivity extends AppCompatActivity {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user,"Facebook");
+                            boolean isNew = Objects.requireNonNull(task.getResult().getAdditionalUserInfo()).isNewUser();
+                            ///////////////////////////////////////////////////////////////////////////////
+                            if(!isNew) {
+                                updateUI(user,"Facebook");
+                                //updateUIGoogle(user);
+
+                            }
+                            else {
+                                Intent intent=new  Intent(LoginActivity.this, RegisterActivityGoogel.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -442,7 +454,9 @@ public class LoginActivity extends AppCompatActivity {
                         case "Google":
                             deleteGoogleUser();
                             break;
-
+                        case "Facebook":
+                            deleteFacebookUser();
+                            break;
                     }
                 }
 
@@ -456,6 +470,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     //delete user for reregister because he didnt finish the all progress of register
     public void deleteUser(){
@@ -508,6 +524,42 @@ public class LoginActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
+
+    }
+
+    private void deleteFacebookUser() {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            AuthCredential credentialg = FacebookAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getProviderId());
+            // Prompt the user to re-provide their sign-in credentials
+            if (firebaseUser != null) {
+                firebaseUser.reauthenticate(credentialg)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                firebaseUser.delete()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d("Tag", "User account deleted.");
+                                                    Toast.makeText(LoginActivity.this,"Please re-register, The registration process has stopped ",Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            }
+                                        });
+
+                            }
+                        });
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+
 
     }
 
