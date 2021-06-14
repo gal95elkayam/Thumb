@@ -1,6 +1,5 @@
 package com.example.thumb;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -38,13 +37,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Objects;
 
 import id.privy.livenessfirebasesdk.LivenessApp;
 import id.privy.livenessfirebasesdk.entity.LivenessItem;
@@ -57,7 +54,6 @@ public class ClientActivity extends AppCompatActivity {
     private static final String $LEFT_MOTION_INSTRUCTION = "Left";
     private static final String $RIGHT_MOTION_INSTRUCTION ="Right" ;
     private static final String TAG ="ClientActivity" ;
-    private boolean selfieEnter=false;
     //check if the user upload selfie
     boolean firstpic_self=false;
     //check if the user upload identity
@@ -278,7 +274,7 @@ public class ClientActivity extends AppCompatActivity {
                         //check if the user upload identity
                         firstpic_identity = true;
                         if (firstpic_self) {
-                            Intent intent = new Intent(ClientActivity.this, perm.class);
+                            Intent intent = new Intent(ClientActivity.this, PermissionActivity.class);
                             startActivity(intent);
                             finish();
                         }

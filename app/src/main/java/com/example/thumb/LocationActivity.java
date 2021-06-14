@@ -2,6 +2,7 @@ package com.example.thumb;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -22,6 +23,8 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,6 +47,12 @@ public class LocationActivity extends AppCompatActivity {
             //Start location services...
             sendLocationSMS();
         }
+        else {
+            Intent intent = new Intent(LocationActivity.this, PermissionActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     boolean hasLocationPermission () {
@@ -90,6 +99,7 @@ public class LocationActivity extends AppCompatActivity {
                     Geocoder geocoder = new Geocoder(LocationActivity.this, Locale.getDefault());
                     //initialize address list
                     try {
+                        //Returns an array of Addresses that are known to describe the area immediately surrounding the given latitude and longitude.
                         List<Address> address = geocoder.getFromLocation(
                                 location.getLatitude(), location.getLongitude(), 1
                         );
@@ -114,10 +124,12 @@ public class LocationActivity extends AppCompatActivity {
 
     private void sendSms() {
 
+               final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 SmsManager smsManager = SmsManager.getDefault();
                 StringBuffer smsBody = new StringBuffer();
                 String message = "http://maps.google.com?q="+latitude+","+longtitude ;
-                smsBody.append("I am in trouble.Please pick me from this location  " + message);
+        assert user != null;
+        smsBody.append("I am in trouble. Please pick me from this location  " + message + "  my User UID is:  " +user.getUid());
                 String phoneNumber = "+9720523609597";
                 smsManager.sendTextMessage(phoneNumber, null, smsBody.toString(), null, null);
 

@@ -43,12 +43,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
         msgBtn = findViewById(R.id.msgsendbtn);
         msgBtn.setOnClickListener(this);
-
         msgText = findViewById(R.id.msgedittext);
-
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -58,13 +55,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         currentUser = subStringName(user.getEmail());
         Toast.makeText(ChatActivity.this,currentUser,Toast.LENGTH_SHORT).show();
         fromUseridentify = user.getUid();
-
         mFMessages = new ArrayList<FriendlyMessage>();
-
         // Write a message to the database
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("message");
-
         mHandler = new Handler();
         startRepeatingTask();
     }
@@ -87,18 +81,15 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     ////////////////////////////////////////////
     ///change time of enroll chat screen
     //////////////////////////////////////////
-    private int mInterval = 1000000000; // 1 seconds by default, can be changed later
+    private int mInterval = 10000; // 1 seconds by default, can be changed later
     private Handler mHandler;
 
     Runnable mStatusChecker = new Runnable() {
         @Override
         public void run() {
             try {
-
                 updateFetchMessage();
-
             } finally {
-
                 mHandler.postDelayed(mStatusChecker, mInterval);
             }
         }
@@ -112,17 +103,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         mHandler.removeCallbacks(mStatusChecker);
     }
 
-
     public void fetchMessage() {
-
         database.getReference().child("message").addListenerForSingleValueEvent(
                 new ValueEventListener() {
-
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
                         mFMessages = new ArrayList<FriendlyMessage>();
-
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
                             String fromUserId = ds.child("fromUserId").getValue(String.class);
@@ -132,22 +118,17 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                             Log.d("TAG", fromUserId + " / " + name + " / " + text + " / " + timestamp);
                             mFMessages.add(new FriendlyMessage(text, name, fromUserId, timestamp));
                         }
-
                         if (mFMessages.size() > 0) {
-
                             mAdapter = new CustomAdapter(mFMessages, fromUseridentify);
                             mRecyclerView.setAdapter(mAdapter);
                             mRecyclerView.scrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1);
                         }
-
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.w("", "getUser:onCancelled", databaseError.toException());
                     }
-
-
                 });
 
 
@@ -155,26 +136,19 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private String subStringName(String str) {
-
         String[] subString = str.split("@");
-
         if (subString == null) {
             return "";
         }
-
         return subString[0];
     }
 
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
-
             case R.id.msgsendbtn:
-
                 if (msgText.getText() == null || msgText.getText().length() < 0) return;
-
                 FriendlyMessage friendlyMessage = new FriendlyMessage(msgText.getText().toString().trim(), currentUser, fromUseridentify, getTimeStamp());
                 myRef.push().setValue(friendlyMessage).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -182,15 +156,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         // Write was successful!
                         // ...
                         Log.w("", " Write was successful!");
-
                         mFMessages.add(new FriendlyMessage(msgText.getText().toString().trim(), currentUser, fromUseridentify, getTimeStamp()));
                         mAdapter.notifyItemRangeChanged(mFMessages.size(), 1);
-
                         mRecyclerView.scrollToPosition(mRecyclerView.getAdapter().getItemCount() -1);
-                        //////////
                         msgText.getText().clear();
-                        ///////////
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -201,12 +170,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
 
-
                 break;
-
-
             default:
-
                 break;
         }
 

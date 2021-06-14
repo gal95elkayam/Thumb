@@ -26,7 +26,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private String mfromUserId;
 
-
     public CustomAdapter(ArrayList<FriendlyMessage> list, String fromUserId) {
         this.listItem = list;
         this.mfromUserId = fromUserId;
@@ -58,22 +57,16 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder v, int pos) {
-        if (v instanceof ViewHolderMe) { // Handle Image Layout
+        if (v instanceof ViewHolderMe) {
             ViewHolderMe viewHolderImage = (ViewHolderMe) v;
             viewHolderImage.messageBody.setText(String.format("%s", listItem.get(pos).getText().trim()));
             viewHolderImage.itemView.setTag(viewHolderImage);
             viewHolderImage.messageTimeMe.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", listItem.get(pos).getMessageTime()));
-        } else if (v instanceof ViewHolderYou) { // Handle Video Layout
+        } else if (v instanceof ViewHolderYou) {
             ViewHolderYou viewHolderYou = (ViewHolderYou) v;
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //viewHolderYou.name.setText(String.format("%s","gal"));
-            //FirebaseUser user = FireHelper.getInstance().AuthInit().getCurrentUser();
             viewHolderYou.name.setText(String.format("%s",listItem.get(pos).getName()));
-            //////////////////////////////////////////////////////////////////////////////
             viewHolderYou.messageBody.setText(String.format("%s", listItem.get(pos).getText()));
             viewHolderYou.messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", listItem.get(pos).getMessageTime()));
-            // messageTime = (TextView) messageTime.findViewById(R.id.message_time);
-            //messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",new Date().getTime()));
             GradientDrawable drawable = (GradientDrawable) viewHolderYou.avatar.getBackground();
             drawable.setColor(Color.GRAY);
             viewHolderYou.itemView.setTag(viewHolderYou);

@@ -1,130 +1,117 @@
 package com.example.thumb;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
-import android.location.LocationManager;
-import android.os.Bundle;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.provider.Settings;
-import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import android.os.Bundle;
 
-import org.jetbrains.annotations.NotNull;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PermissionActivity extends AppCompatActivity {
-    private Context mContext;
-    private Activity mActivity;
-
-    private LinearLayout mRootLayout;
-    private static final String TAG ="Permission" ;
 
 
-    private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
+    private String[] permissions = {Manifest.permission.SEND_SMS,
+            Manifest.permission.ACCESS_FINE_LOCATION};
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Get the application context
-        mContext = getApplicationContext();
-        mActivity = PermissionActivity.this;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkPermission();
+        if(arePermissionsEnabled()){
+//          permissions granted, continue flow normally
+            Intent intent = new Intent(PermissionActivity.this, ShakeEmergencyActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            requestMultiplePermissions();
         }
+
     }
 
 
-    protected void checkPermission() {
-        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.SEND_SMS)
-                + ContextCompat.checkSelfPermission(
-                mActivity, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+    //If ONE permission is not granted, then we return false
+    //If all pass, return true
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private boolean arePermissionsEnabled(){
+        for(String permission : permissions){
+            if(checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)
+                return false;
+        }
+        return true;
+    }
 
-            // Do something, when permissions not granted
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    mActivity, Manifest.permission.SEND_SMS)
-                    || ActivityCompat.shouldShowRequestPermissionRationale(
-                    mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // If we should give explanation of requested permissions
-                // Show an alert dialog here with request explanation
-                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                builder.setMessage("Location and Send Sms External " +
-                        " Storage permissions are required to do the task.");
-                builder.setTitle("Please grant those permissions");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ActivityCompat.requestPermissions(
-                                mActivity,
-                                new String[]{
-                                        Manifest.permission.SEND_SMS,
-                                        Manifest.permission.ACCESS_FINE_LOCATION
-                                },
-                                MY_PERMISSIONS_REQUEST_CODE
-                        );
-                    }
-                });
-                builder.setNeutralButton("Cancel", null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            } else {
-                Log.d("TAG", "checkPermission- new string");
-                // Directly request for required permissions, without explanation
-                ActivityCompat.requestPermissions(
-                        mActivity,
-                        new String[]{
-                                Manifest.permission.SEND_SMS,
-                                Manifest.permission.ACCESS_FINE_LOCATION
-                        },
-                        MY_PERMISSIONS_REQUEST_CODE
-                );
+    //Create a new array of ungranted permissions
+    //Request remaining permissions
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void requestMultiplePermissions(){
+        List<String> remainingPermissions = new ArrayList <>();
+        for (String permission : permissions) {
+            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                remainingPermissions.add(permission);
             }
-        } else {
-            // Do something, when permissions are already granted
-            Toast.makeText(mContext, "Permissions already granted", Toast.LENGTH_SHORT).show();
         }
-        // Intent intent = new Intent(PermissionActivity.this, ShakeEmergencyActivity.class);
-        //  startActivity(intent);
+        requestPermissions(remainingPermissions.toArray(new String[remainingPermissions.size()]), 101);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CODE: {
-                // When request is cancelled, the results array are empty
-                if (
-                        (grantResults.length > 0) &&
-                                (grantResults[0]
-                                        + grantResults[1]
-                                        + grantResults[2]
-                                        == PackageManager.PERMISSION_GRANTED
-                                )
-                ) {
-                    // Permissions are granted
-                    Log.d("TAG", "onRequestPermissionsResult-MY_PERMISSIONS_REQUEST_CODE ");
-                    Toast.makeText(mContext, "Permissions granted.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(PermissionActivity.this, ShakeEmergencyActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    // Permissions are denied
-                    Toast.makeText(mContext, "Permissions denied.", Toast.LENGTH_SHORT).show();
-                    Log.d("TAG", "onRequestPermissionsResult-Permissions denied ");
+    //Show our message explaining to the user why permissions should be granted
+    //If the user agrees, we repeat the process from the start by calling requestMultiplePermissions()
+    //If the user rejects,  we display our alert dialog
 
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 101){
+            for(int i=0;i<grantResults.length;i++){
+                if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                    //We loop over all the results and check if at least 1 is not granted. If that’s the case, we display our alert dialog:
+                    if(shouldShowRequestPermissionRationale(permissions[i])){
+                        new AlertDialog.Builder(this)
+                                .setMessage("Location and Send SMS " + "" +
+                                        "permissions are required to do the task.")
+                                .setTitle("Please grant those permissions")
+                                .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        PermissionActivity.this.requestMultiplePermissions();
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .create()
+                                .show();
+                    }
+                    return;
                 }
             }
+            //all is good, continue flow
+            Intent intent = new Intent(PermissionActivity.this, gpsActivate.class);
+            startActivity(intent);
+            finish();
         }
     }
-}
 
+
+
+
+
+
+
+
+
+
+}

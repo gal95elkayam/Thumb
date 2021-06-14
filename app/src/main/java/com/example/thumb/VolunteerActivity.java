@@ -12,7 +12,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,13 +40,11 @@ import id.privy.livenessfirebasesdk.entity.LivenessItem;
 import id.privy.livenessfirebasesdk.listener.PrivyCameraLivenessCallBackListener;
 
 public class VolunteerActivity extends AppCompatActivity {
-    private static final int RC_SIGN_IN = 101;
     private static final String $SUCCESSTEXT ="Correct" ;
     private static final String $INSTRUCTIONS ="INSTRUCTIONS" ;
     private static final String $LEFT_MOTION_INSTRUCTION = "Left";
     private static final String $RIGHT_MOTION_INSTRUCTION ="Right" ;
     private static final String TAG ="VolunteerActivity" ;
-    private boolean selfieEnter=false;
     //check if the user upload selfie
     boolean firstpic_self=false;
     //check if the user upload identity
@@ -57,7 +54,7 @@ public class VolunteerActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private ProgressDialog mLoadingBar;
     ImageView identity;
-    ImageView certificate;
+    ImageView photo;
     ImageView selfie;
     Uri imageuri;
     Uri imageuri_certificate;
@@ -65,7 +62,6 @@ public class VolunteerActivity extends AppCompatActivity {
     Button btnRegisterSolidier;
     Bitmap selected_image;
     Bitmap selected_image_certificate;
-    Bitmap selcted_selfie;
     LivenessApp livenessApp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +75,7 @@ public class VolunteerActivity extends AppCompatActivity {
         // Create a storage reference from our app
         mStorageRef = FirebaseStorage.getInstance().getReference();
         identity = (ImageView) findViewById(R.id.identity);
-        certificate = (ImageView) findViewById(R.id.certificate);
+        photo = (ImageView) findViewById(R.id.certificate);
         selfie=(ImageView) findViewById(R.id.selfie);
         forPicIdentity =findViewById(R.id.for_add_pic_identity);
         forCertificate=findViewById(R.id.for_add_pic_certificate);
@@ -98,7 +94,7 @@ public class VolunteerActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
-        certificate.setOnClickListener(new View.OnClickListener() {
+        photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -177,7 +173,7 @@ public class VolunteerActivity extends AppCompatActivity {
                 //set image in imageView
                 InputStream is1 = getContentResolver().openInputStream(imageuri_certificate);
                 selected_image_certificate = BitmapFactory.decodeStream(is1);
-                certificate.setImageBitmap(selected_image_certificate);
+                photo.setImageBitmap(selected_image_certificate);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -218,7 +214,7 @@ public class VolunteerActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         myRef.child("users").child(user.getUid()).setValue(userInformation);
         StorageReference ref_child = mStorageRef.child(user.getUid() + "/" + "IdCard.jpg");
-        StorageReference certificateImage = mStorageRef.child(user.getUid() + "/" + "dischargeCertificate.jpg");
+        StorageReference photoImage = mStorageRef.child(user.getUid() + "/" + "photo.jpg");
         UploadTask uploadTask = null;
         StorageReference profileImage = mStorageRef.child(user.getUid() + "/" + "profileVolunteer.jpg");
         Bitmap bitImage = ((BitmapDrawable) selfie.getDrawable()).getBitmap();
@@ -255,7 +251,7 @@ public class VolunteerActivity extends AppCompatActivity {
                         Toast.makeText(VolunteerActivity.this, "FailureL", Toast.LENGTH_SHORT).show();
                     }
                 });
-        certificateImage.putFile(imageuri_certificate)
+        photoImage.putFile(imageuri_certificate)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

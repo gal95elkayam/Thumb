@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class RegisterActivityGoogel extends AppCompatActivity {
+public class RegisterActivityGoogelAndFacebook extends AppCompatActivity {
 
     Button btnRegisterClient;
     Button btnRegisterVoulenteer;
@@ -25,7 +25,7 @@ public class RegisterActivityGoogel extends AppCompatActivity {
         btnRegisterClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent[0] =new Intent(RegisterActivityGoogel.this, ClientActivity.class);
+                intent[0] =new Intent(RegisterActivityGoogelAndFacebook.this, ClientActivity.class);
                 startActivity(intent[0]);
                 finish();
             }
@@ -34,7 +34,7 @@ public class RegisterActivityGoogel extends AppCompatActivity {
         btnRegisterVoulenteer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent[0] =new Intent(RegisterActivityGoogel.this, VolunteerActivity.class);
+                intent[0] =new Intent(RegisterActivityGoogelAndFacebook.this, VolunteerActivity.class);
                 startActivity(intent[0]);
 
 

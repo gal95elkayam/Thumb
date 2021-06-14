@@ -81,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         printKeyHash();
         firebaseFirestore = FirebaseFirestore.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -106,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("TAG=onclick"+TAG);
                 Log.d(TAG, "facebook:onclick:");
                 signInFacebook();
 
@@ -157,8 +154,6 @@ public class LoginActivity extends AppCompatActivity {
     private void signInFacebook(){
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile"));
-        System.out.println("TAG=signInFacebook"+TAG);
-        System.out.println("facebook:callbackManager:"+callbackManager);
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -192,14 +187,11 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             boolean isNew = Objects.requireNonNull(task.getResult().getAdditionalUserInfo()).isNewUser();
-                            ///////////////////////////////////////////////////////////////////////////////
                             if(!isNew) {
                                 updateUI(user,"Facebook");
-                                //updateUIGoogle(user);
-
                             }
                             else {
-                                Intent intent=new  Intent(LoginActivity.this, RegisterActivityGoogel.class);
+                                Intent intent=new  Intent(LoginActivity.this, RegisterActivityGoogelAndFacebook.class);
                                 startActivity(intent);
                                 finish();
                             }
@@ -293,7 +285,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 assert account != null;
-                firebaseAuthWithGoogle(account);
+                firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
@@ -307,8 +299,9 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+    private void firebaseAuthWithGoogle(String idToken) {
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -318,103 +311,25 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(LoginActivity.this,user.getEmail()+user.getDisplayName(),Toast.LENGTH_SHORT).show();
-                            //////////////////////////////////////////////////////////////////////////////////////////////////
                             //to check if it's the first time user logs in, yes->need to register'no->have a count
                             boolean isNew = Objects.requireNonNull(task.getResult().getAdditionalUserInfo()).isNewUser();
-                            ///////////////////////////////////////////////////////////////////////////////
                             if(!isNew) {
                                updateUI(user,"Google");
-                                //updateUIGoogle(user);
-
                             }
                             else{
-                                Intent intent=new  Intent(LoginActivity.this, RegisterActivityGoogel.class);
+                                Intent intent=new  Intent(LoginActivity.this, RegisterActivityGoogelAndFacebook.class);
                                 startActivity(intent);
                                 finish();
-
                             }
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this,task.getException().toString(),Toast.LENGTH_SHORT).show();
-                           // updateUI(null);
                         }
 
-                        // ...
                     }
                 });
     }
 
-    private void updateUIGoogle(FirebaseUser user) {
-
-        final Intent[] intent = new Intent[1];
-
-        //check where we need to send each user--volunteer/need help
-        // DatabaseReference myRef= FirebaseDatabase.getInstance().getReference();
-        FirebaseDatabase myRef = FirebaseDatabase.getInstance();
-        DatabaseReference tripsRef = myRef.getReference().child("users").child(user.getUid());
-        tripsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-               public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Log.d(TAG, "onDataChange: ");
-
-                if (dataSnapshot.exists()) {
-                    UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
-                    Log.d(TAG, "User name: " + userInformation.getName() + ", type: " + userInformation.getTypeUser());
-                    if (userInformation.getTypeUser().equals("volunteer")) {
-                        intent[0] = new Intent(LoginActivity.this, firstScreenChat.class);
-                    } else {
-                        intent[0] = new Intent(LoginActivity.this, perm.class);
-
-                    }
-                    startActivity(intent[0]);
-                    finish();
-
-                } else {
-                    // Toast.makeText(LoginActivity.this,"dataSnapshot not exists ",Toast.LENGTH_SHORT).show();
-                    //delete user for reregister because he didnt finish the all progress of register
-                    final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                    try {
-                        AuthCredential credentialg = GoogleAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getUid(), null);
-                        // Prompt the user to re-provide their sign-in credentials
-                        if (firebaseUser != null) {
-                            firebaseUser.reauthenticate(credentialg)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            firebaseUser.delete()
-                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            if (task.isSuccessful()) {
-                                                                Log.d("Tag", "User account deleted.");
-
-                                                            }
-                                                        }
-                                                    });
-
-                                        }
-                                    });
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-
-
-
-                }
-
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-    }
 
 
     //where we send the user
@@ -423,7 +338,6 @@ public class LoginActivity extends AppCompatActivity {
         final Intent[] intent = new Intent[1];
 
         //check where we need to send each user--volunteer/need help
-       // DatabaseReference myRef= FirebaseDatabase.getInstance().getReference();
         FirebaseDatabase myRef = FirebaseDatabase.getInstance();
         DatabaseReference tripsRef = myRef.getReference().child("users").child(user.getUid());
         tripsRef.addValueEventListener(new ValueEventListener() {
@@ -439,7 +353,7 @@ public class LoginActivity extends AppCompatActivity {
                          intent[0] =new Intent(LoginActivity.this, firstScreenChat.class);
                     }
                     else{
-                        intent[0] =new Intent(LoginActivity.this, perm.class);
+                        intent[0] =new Intent(LoginActivity.this, PermissionActivity.class);
 
                     }
                     startActivity(intent[0]);

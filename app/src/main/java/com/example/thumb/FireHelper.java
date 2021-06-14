@@ -10,7 +10,6 @@ public class FireHelper {
 
     public String s;
     private static FirebaseAuth mAuth;
-    private static FirebaseUser mUser;
 
     private FireHelper()
     {
@@ -34,13 +33,6 @@ public class FireHelper {
 
     }
 
-    public static FirebaseUser getCurrentUser() {
-
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        return mUser;
-
-    }
 
 
 }
