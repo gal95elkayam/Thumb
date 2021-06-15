@@ -38,11 +38,27 @@ public class gpsActivate  extends AppCompatActivity {
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
+                        askGpsPermiisionAgain();
+
                     }
                 });
         final AlertDialog alert = builder.create();
         alert.show();
 
+    }
+
+    private void askGpsPermiisionAgain() {
+        new AlertDialog.Builder(this)
+                .setMessage("permissions are required to do the task.")
+                .setTitle("Please grant those permissions")
+                .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        buildAlertMessageNoGps();
+                    }
+                })
+                .create()
+                .show();
     }
 
     private void start() {

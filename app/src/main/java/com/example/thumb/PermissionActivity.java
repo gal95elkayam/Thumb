@@ -29,7 +29,7 @@ public class PermissionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if(arePermissionsEnabled()){
 //          permissions granted, continue flow normally
-            Intent intent = new Intent(PermissionActivity.this, ShakeEmergencyActivity.class);
+            Intent intent = new Intent(PermissionActivity.this, gpsActivate.class);
             startActivity(intent);
             finish();
         }else{
