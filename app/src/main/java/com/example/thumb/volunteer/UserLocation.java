@@ -1,4 +1,5 @@
-package com.example.thumb;
+package com.example.thumb.volunteer;
+import com.example.thumb.UserInformation;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.ServerTimestamp;
 

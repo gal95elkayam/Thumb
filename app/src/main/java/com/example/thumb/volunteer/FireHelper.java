@@ -1,7 +1,6 @@
-package com.example.thumb;
+package com.example.thumb.volunteer;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class FireHelper {
 

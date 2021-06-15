@@ -7,6 +7,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.thumb.client.ClientActivity;
+import com.example.thumb.volunteer.VolunteerActivity;
+
 
 public class RegisterActivityGoogelAndFacebook extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.thumb;
+package com.example.thumb.client;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.thumb.R;
 
 import java.util.Objects;
 

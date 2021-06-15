@@ -19,14 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity_splash" />
-        <activity android:name=".SubscribeActivity" />
-        <activity android:name=".LocationActivity" />
-        <activity android:name=".firstScreenChat" />
-        <activity android:name=".ChatActivity" />
+        <activity android:name=".volunteer.SubscribeActivity" />
+        <activity android:name=".client.LocationActivity" />
+        <activity android:name=".volunteer.firstScreenChat" />
+        <activity android:name=".volunteer.ChatActivity" />
         <activity android:name=".LoginActivity"/>
-        <activity android:name=".gpsActivate"/>
-        <activity android:name=".PermissionActivity">
+        <activity android:name=".client.gpsActivate"/>
+        <activity android:name=".client.PermissionActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -46,9 +45,9 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".ClientActivity" />
-        <activity android:name=".VolunteerActivity" />
-        <activity android:name=".ShakeEmergencyActivity" />
+        <activity android:name=".client.ClientActivity" />
+        <activity android:name=".volunteer.VolunteerActivity" />
+        <activity android:name=".client.ShakeEmergencyActivity" />
         <activity android:name=".RegisterActivityGoogelAndFacebook" />
 
         <meta-data

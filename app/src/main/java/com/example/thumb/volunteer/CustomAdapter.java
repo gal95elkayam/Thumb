@@ -1,4 +1,4 @@
-package com.example.thumb;
+package com.example.thumb.volunteer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseUser;
+import com.example.thumb.R;
 
 import java.util.ArrayList;
 

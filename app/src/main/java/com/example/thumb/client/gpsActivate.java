@@ -1,4 +1,4 @@
-package com.example.thumb;
+package com.example.thumb.client;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.thumb.R;
 
 public class gpsActivate  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.example.thumb;
+package com.example.thumb.volunteer;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;

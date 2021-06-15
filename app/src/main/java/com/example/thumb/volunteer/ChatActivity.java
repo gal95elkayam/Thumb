@@ -1,4 +1,4 @@
-package com.example.thumb;
+package com.example.thumb.volunteer;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.thumb.R;
+import com.example.thumb.UserInformation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;

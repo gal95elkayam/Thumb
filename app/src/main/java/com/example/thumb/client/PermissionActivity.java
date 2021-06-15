@@ -1,4 +1,4 @@
-package com.example.thumb;
+package com.example.thumb.client;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -12,6 +12,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.thumb.R;
 
 import java.util.ArrayList;
 import java.util.List;
