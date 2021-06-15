@@ -29,7 +29,7 @@ public class firstScreenChat extends AppCompatActivity {
                 DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
                 FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
                 String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
-                myRef.child("chat").child(user.getUid()).setValue(user.getDisplayName());
+             //   myRef.child("chat").child(user.getUid()).setValue(user.getDisplayName());
                 Intent intent=new Intent(firstScreenChat.this, ChatActivity.class);
                 startActivity(intent);
                 finish();
